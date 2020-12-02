@@ -17,7 +17,7 @@ def tweet_note(request, note):
     # if that authorization fails (various tweepy error possible, which are logged)
     # then the message is sent and the new_note function continues uninterrupted
     if api == 'error':
-        messages.error(request, 'The site was unable to authorize to the Twitter account!')
+        messages.error(request, 'Sorry cant tweet right now')
     # if it didn't return error, then it should have the ok from tweepy
     else:
         # then it will attempt to tweet the note, which requires the auth and note
@@ -26,8 +26,6 @@ def tweet_note(request, note):
         # these messages are then sent to the note_detail page to display at the top
         if response == 'error':
             messages.error(request, 'The site was unable to tweet the note!')
-        elif response == 'length error':
-            messages.error(request, 'The note was posted, but was too long to tweet')
         else:
             messages.success(request, 'Successfully Tweeted your note to our site account!')
 
@@ -51,20 +49,32 @@ def authorize():
 
 
 def post_tweet(api, note):
+
+    text = make_tweet_text(note)
     # the note is adapted to a twitter-friendly version
-    adapted_note = f'{note.show.artist.name} at {note.show.venue.name}.\n{note.title}: {note.text} -{note.user}'
     # then before attempting to use the API, the length is checked
-    if len(adapted_note) <= 240:
-        try:
-            # this runs the update status function of the API bit returned by tweepy earlier, passing the adapted note to it
-            response = api.update_status(adapted_note)
-            # might not be necessary? so long as it doesn't return error, it's ok and the tweet is posted
-            return response
-        # if tweepy raises an error, that's logged and the user sees a more friendly error
-        except tweepy.TweepError as err:
-            err_message = err.args[0][0]['message']
-            err_code = err.args[0][0]['code']
-            logging.error(f'tweet failed due to error code {err_code}: {err_message}')
-            return 'error'
-    else:
-        return 'length error'
+
+    try:
+        # this runs the update status function of the API bit returned by tweepy earlier, passing the adapted note to it
+        post_status(api)
+        # might not be necessary? so long as it doesn't return error, it's ok and the tweet is posted
+        return 'success'
+    # if tweepy raises an error, that's logged and the user sees a more friendly error
+    except tweepy.TweepError as err:
+        err_message = err.args[0][0]['message']
+        err_code = err.args[0][0]['code']
+        logging.error(f'tweet failed due to error code {err_code}: {err_message}')
+        return 'error'
+    
+
+
+def post_status(api, note_text):
+    api.update_status(note_text)
+    
+
+
+# regular unit test 
+def make_tweet_text(note):
+    # consider truncating longer notes? 
+    return f'{note.show.artist.name} at {note.show.venue.name}.\n{note.title}: {note.text} -{note.user}'
+    
