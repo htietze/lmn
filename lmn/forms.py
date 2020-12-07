@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note
+from .models import Note, Profile
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -82,3 +82,7 @@ class UserRegistrationForm(UserCreationForm):
             user.save()
 
         return user
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio',)

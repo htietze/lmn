@@ -85,3 +85,6 @@ class Note(models.Model):
     def __str__(self):
         return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
 
+class Profile(models.Model):
+    bio = models.TextField(max_length=500, blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)

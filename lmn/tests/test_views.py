@@ -444,29 +444,23 @@ class TestUserProfile(TestCase):
     def test_username_shown_on_profile_page(self):
         # A string "username's notes" is visible
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':1}))
-        self.assertContains(response, 'alice\'s notes')
+        self.assertContains(response, 'alice\'s Notes')
         
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
-        self.assertContains(response, 'bob\'s notes')
+        self.assertContains(response, 'bob\'s Notes')
 
 
     def test_correct_user_name_shown_different_profiles(self):
         logged_in_user = User.objects.get(pk=2)
         self.client.force_login(logged_in_user)  # bob
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
-        self.assertContains(response, 'You are logged in, <a href="/user/profile/2/">bob</a>.')
+        self.assertContains(response, 'You are logged in, <a href="/user/profile/">bob</a>.')
         
         # Same message on another user's profile. Should still see logged in message 
         # for currently logged in user, in this case, bob
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':3}))
-        self.assertContains(response, 'You are logged in, <a href="/user/profile/2/">bob</a>.')
 
-    
-    def test_goodbye_logout(self):
-        response = self.client.get(reverse('goodbye_logout'))
-        self.assertContains(response, 'You have been successfully logged out.')
-
-        
+        self.assertContains(response, 'You are logged in, <a href="/user/profile/">bob</a>.')        
 
 class TestNotes(TestCase):
     fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_notes' ]  # Have to add artists and venues because of foreign key constrains in show
@@ -566,7 +560,7 @@ class TestUserAuthentication(TestCase):
         # be redirected to the last page they were at, not the homepage.
         response = self.client.post(reverse('register'), {'username':'sam12345', 'email':'sam@sam.com', 'password1':'feRpj4w4pso3az@1!2', 'password2':'feRpj4w4pso3az@1!2', 'first_name':'sam', 'last_name' : 'sam'}, follow=True)
         new_user = authenticate(username='sam12345', password='feRpj4w4pso3az@1!2')
-        self.assertRedirects(response, reverse('user_profile', kwargs={"user_pk": new_user.pk}))   
+        self.assertRedirects(response, reverse('my_user_profile'))   
         self.assertContains(response, 'sam12345')  # page has user's name on it
 
 
@@ -605,6 +599,35 @@ class TestNoteDetail(TestCase):
         self.assertEqual(403, response.status_code)  #403 = forbidden - this is not owner of this note
         #make sure note 2 not changed
         self.assertEqual('yay!' , note_2.text)
+
+class TestProfileUser(TestCase):
+    fixtures = ['testing_users', 'testing_users_profile']
+
+    def test_user_not_logged_in(self):
+        response = self.client.get(reverse('my_user_profile'))
+        self.assertRedirects(response, '/accounts/login/?next=/user/profile/')
+
+    def test_user_logged_in(self):
+        self.client.force_login(User.objects.first())
+        response = self.client.get(reverse('my_user_profile'))
+        self.assertTemplateUsed(response, 'lmn/users/my_user_profile.html')
+        self.assertContains(response, 'This bio is for user 1')
+        # should have an Add Edited Profile
+        self.assertContains(response, 'Add Edited Profile')
+
+    def test_user_edited_form_has_data(self):
+        self.client.force_login(User.objects.first())
+        response = self.client.get(reverse('my_user_profile'))
+        self.assertContains(response, 'This bio is for user 1')
+        self.assertContains(response, 'Add Edited Profile')
+
+    def test_form_for_correct_url(self):
+        self.client.force_login(User.objects.get(pk=2))
+        response = self.client.get(reverse('my_user_profile'))
+        self.assertContains(response, 'action="/user/profile/')
+
+
+
 
 
 class TestImageUpload(TestCase):
