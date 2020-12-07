@@ -145,9 +145,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
 if os.getenv('GAE_INSTANCE'):
     GS_STATIC_FILE_BUCKET = 'lmnop-project5.appspot.com'
 
@@ -158,6 +155,9 @@ if os.getenv('GAE_INSTANCE'):
 
     from google.oauth2 import service_account
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file('lmnop_credentials.json')
+
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 
 # Where to send user after successful login, and logout, if no other page is provided.
