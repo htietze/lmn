@@ -1,8 +1,17 @@
 {% extends 'lmn/base.html' %}
+{% load static %}
 {% block content %}
 
 
 <!-- A user's profile page-->
+
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+        <p class="{{message.tags}}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
 
 <h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
 <p>Edit Profile Here</p>
@@ -35,4 +44,7 @@
     <p id='no_records'>No notes.</p>
 
 {% endfor %}
+
+<script src="{% static 'js/confirm_delete.js' %}"></script>
+
 {% endblock %}
