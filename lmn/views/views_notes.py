@@ -40,10 +40,11 @@ def latest_notes(request):
     search_form =NoteSearchForm(request.GET)
     if search_form.is_valid():
         search_term = search_form.cleaned_data['search_term']
-        notes = Note.objects.filter(title__icontains=search_term).order_by(Lower('title'))
+        notes = Note.objects.filter(title__icontains=search_term).order_by('-posted_date')
+
     else:
         search_form = NoteSearchForm()
-        notes = Note.objects.order_by(Lower('title'))
+        notes = Note.objects.order_by('-posted_date')
     # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
     # Calls helper function to paginate records. (request, list of objects, how many entries per page)
@@ -66,7 +67,7 @@ def note_detail(request, note_pk):
     if note.user != request.user:
         return HttpResponseForbidden()
       
-    form = NewNoteForm(instance=note)  # Pre-populate with data from this NOte instance
+    form = NewNoteForm(instance=note)  # Pre-populate with data from this Note instance
     return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
 
 

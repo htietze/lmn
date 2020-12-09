@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 
 from lmn.models import Venue, Artist, Note, Show
 from django.contrib.auth.models import User
-
+from lmnop_project import helpers
 import re, datetime
 from datetime import timezone
 import os
@@ -384,7 +384,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         response = self.client.post(new_note_url, {'text':'ok', 'title':'blah blah' }, follow=True)
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
-        self.assertRedirects(response, reverse('user_profile' , kwargs = {'user_pk': 1}))
+        self.assertRedirects(response, reverse('my_user_profile'))#} , kwargs = {'user_pk': 1}))
         
 
 class TestDeleteNote(TestCase):
@@ -476,6 +476,7 @@ class TestNotes(TestCase):
         self.assertEqual(third.pk, 1)
 
 
+
     def test_notes_for_show_view(self):
         # Verify correct list of notes shown for a Show, most recent first
         # Show 1 has 2 notes with PK = 2 (most recent) and PK = 1
@@ -490,6 +491,7 @@ class TestNotes(TestCase):
         response = self.client.get(reverse('latest_notes'))
         self.assertTemplateUsed(response, 'lmn/notes/note_list.html')
 
+        self.client.force_login(User.objects.first()) 
         response = self.client.get(reverse('note_detail', kwargs={'note_pk':1}))
         self.assertTemplateUsed(response, 'lmn/notes/note_detail.html')
 
@@ -509,9 +511,10 @@ class TestSearchNotes(TestCase):
         
         response = self.client.get(reverse('latest_notes'), {'search_term' :'super'} )
         self.assertEqual(len(response.context['notes']), 1)
-        notes = list(response.context['notes'].all())
-        note1 = notes[0]
-        self.assertEqual(note1.text, 'woo hoo!')
+        page1 = response.context['notes']
+        #retrieve the text of the first element that appears on page 1 of the search return
+        note1Text = page1[0].text
+        self.assertEqual(note1Text, 'woo hoo!' )
 
 
     def test_note_search_not_matches(self):
@@ -522,9 +525,11 @@ class TestSearchNotes(TestCase):
     def test_note_search_caseinsensitive_matches(self):
         response = self.client.get(reverse('latest_notes'), {'search_term' :'SUPER'} )
         self.assertEqual(len(response.context['notes']), 1)
-        notes = list(response.context['notes'].all())
-        note1 = notes[0]
-        self.assertEqual(note1.text, 'woo hoo!')
+        page1 = response.context['notes']
+        #retrieve the text of the first element that appears on page 1 of the search return
+        note1Text = page1[0].text
+        self.assertEqual(note1Text, 'woo hoo!' )
+        
     
     def test_note_search_partial_match_search_results(self):
         response = self.client.get(reverse('latest_notes'), {'search_term' : 'o'})

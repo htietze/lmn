@@ -130,4 +130,3 @@ class TestListWithPageData(TestCase):
         self.assertEquals(str(paged_list_exists), str(paged_list_out_of_bounds))
         paged_list_out_of_bounds = helpers.pg_records(-1000, artists, 2)
         self.assertEquals(str(paged_list_exists), str(paged_list_out_of_bounds))
-
