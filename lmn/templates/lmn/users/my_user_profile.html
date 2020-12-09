@@ -4,15 +4,23 @@
 
 <!-- A user's profile page-->
 
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+        <p class="{{message.tags}}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
 <h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
-<p>Edit Profile Here</p>
+<p>Add User Info Here</p>
 
 <form method="POST" action="{% url 'my_user_profile' %}">
     <div>
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ user_form.as_p }}
     </div>
-    <input type='submit' value='Add Edited Profile'>
+    <input type='submit' value='Submit Info About User'>
     
 </form>
 
@@ -35,4 +43,6 @@
     <p id='no_records'>No notes.</p>
 
 {% endfor %}
+
+
 {% endblock %}

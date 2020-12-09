@@ -611,20 +611,49 @@ class TestProfileUser(TestCase):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
         self.assertTemplateUsed(response, 'lmn/users/my_user_profile.html')
-        self.assertContains(response, 'This bio is for user 1')
-        # should have an Add Edited Profile
-        self.assertContains(response, 'Add Edited Profile')
+        
+        # should have an Submit Info About User
+        self.assertContains(response, 'Submit Info About User')
 
     def test_user_edited_form_has_data(self):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
-        self.assertContains(response, 'This bio is for user 1')
-        self.assertContains(response, 'Add Edited Profile')
+        #should have an Add User Info Here
+        self.assertContains(response, 'Add User Info Here')
 
     def test_form_for_correct_url(self):
         self.client.force_login(User.objects.get(pk=2))
         response = self.client.get(reverse('my_user_profile'))
         self.assertContains(response, 'action="/user/profile/')
+
+    def test_user_favorite_artist_is_displayed_on_public_profile_page(self):
+        response = self.client.get(reverse('user_profile', kwargs={'user_pk':1}))
+        self.assertContains(response, 'Post Malone')
+        self.assertTemplateUsed(response, 'lmn/users/user_profile.html')  
+
+    def test_user_bio_is_displayed_on_public_profile_page(self):
+        response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
+        self.assertContains(response, 'This bio is for user 2')
+        self.assertTemplateUsed(response, 'lmn/users/user_profile.html') 
+
+    def test_user_favorite_artist_is_not_on_another_users_profile_page(self):
+        response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
+        self.assertNotContains(response, 'Post Malone')     
+
+    def test_correct_user_name_shown_after_user_adds_info(self):
+        logged_in_user = User.objects.get(pk=2)
+        self.client.force_login(logged_in_user)  
+        response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
+        self.assertContains(response, '2')
+
+
+    
+
+    
+    
+             
+    
+             
 
 
 

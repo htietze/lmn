@@ -30,5 +30,13 @@
 {% block content %}
 {% endblock %}
 
+{% if messages %}
+  {% for message in messages %}
+    <div class="message-{{ message.tags }}">
+      <b>{{ message }}</b>
+    </div>
+  {% endfor %}
+{% endif %}
+
 </body>
 </html>
