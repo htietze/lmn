@@ -17,9 +17,9 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'LMNOP'
-copyright = '2020, Tom,Hugh,Boris,Ahmed,Filmon,Kathryn'
-author = 'Tom,Hugh,Boris,Ahmed,Filmon,Kathryn'
+project = 'lmnop'
+copyright = '2020, Tom, Hugh, Ahmed, Boris, Filmon, Kathryn'
+author = 'Tom, Hugh, Ahmed, Boris, Filmon, Kathryn'
 
 
 # -- General configuration ---------------------------------------------------
