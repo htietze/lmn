@@ -1,7 +1,7 @@
 {% extends 'lmn/base.html' %}
 {% block content %}
 
-<h2>Venue List</h2>
+<h2>Venue List <i class="fas fa-building"></i></h2>
 
 <div>
 
@@ -9,7 +9,7 @@
 
   <form action="{% url 'venue_list' %}">
     {{ form }}
-    <input type='submit' value='Search'/>
+    <input type='submit' class='search' value='Search'/>
   </form>
 
   <div>

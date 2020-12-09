@@ -11,8 +11,10 @@
     {% csrf_token %}
     {{ form.as_p }}
   </div>
-  <input type='submit' name='post_type' value='Add Note'>
-  <input type='submit' id='tweet' name='post_type' value='Tweet and Add Note'>
+
+  <input type='submit' class='submit' name='post_type' value='Add Note'>
+  <input type='submit' class='submit' id='tweet' name='post_type' value='Tweet and Add Note'>
+  
 </form>
 <p>Tweet character limit: 
   <span id='counter'>280/280</span>
