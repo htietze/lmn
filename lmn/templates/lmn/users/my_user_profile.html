@@ -13,14 +13,14 @@
 {% endif %}
 
 <h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
-<p>Edit Profile Here</p>
+<p>Add User Info Here</p>
 
 <form method="POST" action="{% url 'my_user_profile' %}">
     <div>
       {% csrf_token %}
-      {{ form.as_p }}
+      {{ user_form.as_p }}
     </div>
-    <input type='submit' value='Add Edited Profile'>
+    <input type='submit' value='Submit Info About User'>
     
 </form>
 

@@ -14,16 +14,35 @@ user is a variable provided to the template and is the current logged-in user
 
 -->
 
-<h2 id='username_notes'>{{ user_profile.username }}'s notes <i class="fas fa-music"></i></h2>
 <h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
 
 {% if user_profile.profile.bio %}
 <div>
-    <p>{{ user_profile.profile.bio }}</p>
+    <p>Bio: {{ user_profile.profile.bio }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.favorite_artist %}
+<div>
+    <p>Fav Artist: {{ user_profile.profile.favorite_artist }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.favorite_show %}
+<div>
+    <p>Fav Show: {{ user_profile.profile.favorite_show }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.location %}
+<div>
+    <p>Location: {{ user_profile.profile.location }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.favorite_music %}
+<div>
+    <p>Fav Music: {{ user_profile.profile.favorite_music }}</p>
 </div>
 {% endif %}
 
-<h2 id='username_notes'>{{ user_profile.username }}'s Notes</h2>
+<h2 id='username_notes'>{{ user_profile.username }}'s Notes <i class="fas fa-music"></i></h2>
 
 {% for note in notes %}
 

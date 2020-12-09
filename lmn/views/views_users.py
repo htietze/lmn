@@ -18,25 +18,33 @@ def user_profile(request, user_pk):
 
 @login_required
 def my_user_profile(request):
-    # TODO - editable version for logged-in user to edit their own profile
     
     if request.method == 'POST':
-        form = ProfileForm(request.POST, instance=request.user.profile) if hasattr(request.user, 'profile') else  ProfileForm(request.POST)
-        if form.is_valid():
-            profile_form = form.save(commit=False)
-            profile_form.user = request.user
-            profile_form.save()
+        profile = Profile.objects.get(user=request.user)
+        form = ProfileForm(request.POST, instance=profile) 
 
-    user = request.user
-    usernotes = Note.objects.filter(user=user.pk).order_by('-posted_date')
-    form = ProfileForm(instance=user.profile) if hasattr(user, 'profile') else ProfileForm()
-    data = {
-        'user_profile': user,
-        'notes': usernotes,
-        'form': form,
+        context = {
+        'user_form' : form,
+        'user_profile': request.user
+        }
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            new_user_form = ProfileForm(instance=request.user.profile)
+            return redirect('my_user_profile')
+        else:
+            messages.error(request, form.errors)
+            return render(request, 'lmn/users/my_user_profile.html')
+
+        return redirect('my_user_profile')
+    else:
+        user_form = ProfileForm()
+    context = {
+        'user_form' : user_form,
+        'user_profile': request.user
     }
 
-    return render(request, 'lmn/users/my_user_profile.html', data)        
+    return render(request, 'lmn/users/my_user_profile.html', context)
 
 
 def register(request):
