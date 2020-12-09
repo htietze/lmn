@@ -9,7 +9,7 @@ from lmnop_project import helpers
 
 @login_required
 def new_note(request, show_pk):
-""" Add a new note including photo for a show"""
+    """ Add a new note including photo for a show"""
     show = get_object_or_404(Show, pk=show_pk)
 
     if request.method == 'POST':

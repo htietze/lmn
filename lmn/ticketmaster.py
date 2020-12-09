@@ -1,14 +1,13 @@
 
-
 import os
 import requests
 import re
-from ..models import Artist, Venue, Show
+from .models import Artist, Venue, Show
 from django.http import HttpResponse
 from django.http import Http404
 from django.db import IntegrityError
-from django import logging
 
+import logging
 """Getting data from ticketmaster api and saving to the database"""
 
 
@@ -20,7 +19,7 @@ city = 'Minneapolis'
 def get_ticketMaster():
     """The api call to Ticketmaster.
         return: data json response
-        raises except
+        raises exception
     """
     try:
         query= {'classificationName': classificationName, 'city' : city, 'apikey': key}
