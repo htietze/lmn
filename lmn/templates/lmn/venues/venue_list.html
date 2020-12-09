@@ -39,4 +39,20 @@
 
 </div>
 
+<div class="pagination">
+    <div class="section-inner clearfix">
+        <p>
+            {% if venues.has_previous %}
+                <a href="?page={{ venues.previous_page_number }}">&lt; Prev</a> |
+            {% endif %}
+
+            {% if venues.has_next %}
+                <a href="?page={{ venues.next_page_number }}">Next &gt;</a>
+            {% endif %}
+
+            <span>Page {{ venues.number }} of {{ venues.paginator.num_pages }}</span>
+        </p>
+    </div>
+</div>
+
 {% endblock %}

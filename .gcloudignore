@@ -23,3 +23,4 @@ cloud_sql_proxy
 .vscode
 .idea
 env
+media

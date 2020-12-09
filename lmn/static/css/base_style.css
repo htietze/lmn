@@ -47,6 +47,15 @@ a {
   margin: 2px;
   /* font-weight: bold; */
 }
+.user-image{
+  max-width: 70%;
+}
+.user-image{
+  max-height: 50%;
+}
+
+
+
 
 .submit {
   background-color: rgb(157, 3, 252);/* color of text on button */
