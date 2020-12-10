@@ -29,8 +29,9 @@ allows other users to view these details as well as a list of their notes.
 * Users are now able to delete and edit their own notes
 
 ![alt text](readme_images/del_edit.png)
-
-
+* Added a new tab link that allows the user to view the top 5 pages with the most notes
+* Added feature that lets the user add a rating to their notes.
+***
 ### To install
 
 Create and activate a virtual environment. Use Python3 
@@ -89,7 +90,7 @@ http://127.0.0.1:8000
 Google Cloud Platform site:
 
 https://www.google.com/url?q=https%3A%2F%2Flmnop-project5.uc.r.appspot.com
-
+***
 ### Create superuser
 
 `python manage.py createsuperuser`
@@ -100,7 +101,7 @@ will be able to use these to log into admin console at
 
 127.0.0.1:8000/admin
 
-
+***
 ### Run tests
 
 
@@ -116,7 +117,7 @@ python manage.py test lmn.tests.test_views.TestUserAuthentication
 python manage.py test lmn.tests.test_views.TestUserAuthentication.test_user_registration_logs_user_in
 ```
 
-
+***
 ### Functional Tests with Selenium
 
 Make sure you have the latest version of Chrome or Firefox, and the most recent chromedriver or geckodriver, and latest Selenium.
@@ -137,7 +138,7 @@ python manage.py test lmn.tests.functional_tests.HomePageTest
 python manage.py test lmn.tests.functional_tests.BrowseArtists.test_searching_artists
 ```
 
-
+***
 ### Test coverage
 
 From directory with manage.py in it,
@@ -147,7 +148,7 @@ coverage run --source='.' manage.py test lmn.tests
 coverage report
 ```
 
-
+***
 ### PostgreSQL
 
 Recommend using PaaS Postgres such as Elephant, instead of installing local Postgres. 
