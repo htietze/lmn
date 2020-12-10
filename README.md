@@ -5,11 +5,31 @@
 * Now connected to the ticketmaster api which populates the database 
 accessing 127.0.0.1:8000/ticket_master locally, or is updated automatically 
 each Monday at 9 AM on the hosted site.
+* User is now able to create new notes for shows, as well as upload photos
+
+![alt text](readme_images/new_note.png)
 * Site is connected to twitter, allowing user to post to the LMNOP twitter account 
 when they create a new show note. Post may be viewed at https://twitter.com/LMNOP_Group4
+
 * Site now limits the number of entries shown per page for user notes, shows, and venues
+
+![alt text](readme_images/paginate.png)
 * User is now able to provide and edit details about themselves on their profile page, and 
-allows other users to view these details as well as their notes.
+allows other users to view these details as well as a list of their notes.
+
+![alt text](readme_images/edit.png)
+![alt text](readme_images/profile.png)
+* Page now sports a new and improved look 
+* Notes are now easily searched from the notes tab
+
+![alt text](readme_images/search.png)
+* When the user logs out, they are provided with a goodbye message
+
+![alt text](readme_images/goodbye.png)
+* Users are now able to delete and edit their own notes
+
+![alt text](readme_images/del_edit.png)
+
 
 ### To install
 
