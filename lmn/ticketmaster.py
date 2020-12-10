@@ -17,9 +17,10 @@ classificationName = 'music'
 city = 'Minneapolis'
 
 def get_ticketMaster():
-    """The api call to Ticketmaster.
-        return: data json response
-        raises exception
+    """The api call to Ticketmaster
+
+    :return: data json response
+    :raises exception
     """
     try:
         query= {'classificationName': classificationName, 'city' : city, 'apikey': key}
@@ -31,10 +32,10 @@ def get_ticketMaster():
         
     
 def extract_music_details(data):
-    """Extract relevant data from the response
-    Saving data to the database avoiding duplicates
-        params: data - json response from ticketmaster
-    
+    """Extract relevant data from the response;
+    saving data to the database avoiding duplicates
+
+    :params: data - json response from ticketmaster
     """
     events = data['_embedded']['events']
     
