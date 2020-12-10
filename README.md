@@ -1,23 +1,74 @@
 # LMNOP
 
 ## Live Music Notes, Opinions, Photographs
-
+###New features:
+* Now connected to the ticketmaster api which populates the database 
+accessing 127.0.0.1:8000/ticket_master locally, or is updated automatically 
+each Monday at 9 AM on the hosted site.
+* Site is connected to twitter, allowing user to post to the LMNOP twitter account 
+when they create a new show note. Post may be viewed at https://twitter.com/LMNOP_Group4
+* Site now limits the number of entries shown per page for user notes, shows, and venues
+* User is now able to provide and edit details about themselves on their profile page, and 
+allows other users to view these details as well as their notes.
 
 ### To install
 
-1. Create and activate a virtual environment. Use Python3 as the interpreter. Suggest locating the venv/ directory outside of the code directory.
+Create and activate a virtual environment. Use Python3 
+as the interpreter. Suggest locating the venv/ directory 
+outside of the code directory. In addition several environment 
+variables are required for the program to run correctly locally.
+The names of the variables must match exactly as displayed below. 
 
+###Required environment variables:
+####Ticketmaster:
+Register at: https://developer-acct.ticketmaster.com/user/register
+```
+env variable: TICKETMASTER_KEY=put_your_key_here
+```
+####Twitter:
+Register at: https://developer.twitter.com/en/docs/developer-portal/overview
+
+env variables:
+```
+T_API_KEY=your_key_here
+T_API_KEY_SEC=your_key_here
+T_ACCESS_TOK=your_key_here 
+T_ACCESS_TOK_SEC=your_key_here
+```
+##Windows Version:
+####Create and run virtual environment:
+```
+python -m venv env
+env\Scripts\activate
+```
+####Install required modules:
 ```
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
+##Mac Version:
+####Create and run virtual environment:
+```
+python3 -m venv env
+source env/bin/activate
+```
+####Install required modules:
 
-Site at
+```
+pip3 install -r requirements.txt
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver
+```
+Local site available at:
 
 http://127.0.0.1:8000
 
+Google Cloud Platform site:
+
+https://www.google.com/url?q=https%3A%2F%2Flmnop-project5.uc.r.appspot.com
 
 ### Create superuser
 
