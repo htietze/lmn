@@ -88,6 +88,7 @@ class Note(models.Model):
     def __str__(self):
         return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
 
+""" A User Profile class which is an extension of django user profile updating and adding more info about user """
 class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -99,12 +100,13 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music}'
 
-
+""" Whenever an instance of a User is being saved to the database this will notify django """
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
+""" The receiver notifies django when an instance of of a User is being saved """
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()

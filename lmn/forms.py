@@ -82,6 +82,8 @@ class UserRegistrationForm(UserCreationForm):
             user.save()
 
         return user
+
+""" Created a form called Profile Form with fields for User Profile """
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
