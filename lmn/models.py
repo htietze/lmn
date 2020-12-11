@@ -20,6 +20,8 @@ User._meta.get_field('last_name')._blank = False
 User._meta.get_field('first_name')._blank = False
 
 
+rating_choice = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'))
+
 """ A music artist """
 class Artist(models.Model):
     name = models.CharField(max_length=200, blank=False, unique=True)
@@ -62,6 +64,7 @@ class Note(models.Model):
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
+    rating = models.CharField(choices=rating_choice, max_length=3, blank=True, null=True)
 
     
 

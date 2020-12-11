@@ -53,6 +53,9 @@ user is a variable provided to the template and is the current logged-in user
 
   <p class="note_info">{{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}</p>
   <p class="note_text">{{ note.text|truncatechars:300 }}</p>
+  {% if note.rating %}
+  <p class='note-rating'>User rating: {{ note.rating }}/5</p>
+  {% endif %}
   <p class="note_posted_at">{{ note.posted_date }}</p>
   
 </div>
