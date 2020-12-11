@@ -13,34 +13,28 @@ user_profile is the user that this profile is about
 user is a variable provided to the template and is the current logged-in user 
 
 -->
+<!-- A user profile page with updated information about the user and their notes -->
+<h2 class="center-align">Your Updated Profile</h2>
 
-<h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
-
+<p class="account-heading">Username: {{ user_profile.username }}</p>
+<p class="account-heading">Email: {{ user_profile.email}}</p>
 {% if user_profile.profile.bio %}
-<div>
-    <p>Bio: {{ user_profile.profile.bio }}</p>
-</div>
+    <p> Your Biography: {{ user_profile.profile.bio }}</p>
 {% endif %}
 {% if user_profile.profile.favorite_artist %}
-<div>
-    <p>Fav Artist: {{ user_profile.profile.favorite_artist }}</p>
-</div>
+    <p>Your Favorite Artist: {{ user_profile.profile.favorite_artist }}</p>
 {% endif %}
 {% if user_profile.profile.favorite_show %}
-<div>
-    <p>Fav Show: {{ user_profile.profile.favorite_show }}</p>
-</div>
+    <p>Your Favorite Show: {{ user_profile.profile.favorite_show }}</p>
 {% endif %}
 {% if user_profile.profile.location %}
-<div>
-    <p>Location: {{ user_profile.profile.location }}</p>
-</div>
+    <p> Your Favorite Location: {{ user_profile.profile.location }}</p>
 {% endif %}
 {% if user_profile.profile.favorite_music %}
-<div>
-    <p>Fav Music: {{ user_profile.profile.favorite_music }}</p>
-</div>
+    <p> Your Favorite Music: {{ user_profile.profile.favorite_music }}</p>
 {% endif %}
+
+
 
 <h2 id='username_notes'>{{ user_profile.username }}'s Notes <i class="fas fa-music"></i></h2>
 

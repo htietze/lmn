@@ -17,10 +17,11 @@
 <a href="{% url 'artist_list' %}">Artists</a>
 <a href="{% url 'latest_notes' %}">Notes</a>
 
+<!-- When a User logs in, will be directed to my user profile -->
 {% if user.is_authenticated %}
 
   <span id='welcome-user-msg'>You are logged in, <a href="{% url 'my_user_profile' %}">{{ user.username }}</a>.  <a href="{% url 'logout' %}">Logout</a></span>
-
+  
 
 {% else %}
 
