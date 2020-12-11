@@ -1,5 +1,4 @@
 {% extends 'lmn/base.html' %}
-{% load static %}
 {% block content %}
 
 
@@ -14,8 +13,6 @@
 {% endif %}
 
 
-
- 
 {% if user.username == note.user.username %}
 <form method="POST" action="{% url 'edit_note' note.pk %}">
   <div>
@@ -23,7 +20,8 @@
     {{ form.as_p }}
   </div>
   
-  <input type='submit' value='Edit Note'>
+  <input type='submit' class = 'submit' value='Edit Note'>
+
 </form>
 
 
@@ -33,6 +31,5 @@
 </form>
 {% endif %}
 
-<script src="{% static 'js/confirm_delete.js' %}"></script>
 
 {% endblock %}
