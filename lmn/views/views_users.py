@@ -15,7 +15,7 @@ def user_profile(request, user_pk):
     usernotes = Note.objects.filter(user=user.pk).order_by('-posted_date')
     return render(request, 'lmn/users/user_profile.html', { 'user_profile': user , 'notes': usernotes })
 
-
+""" Edited the logged-in User and directed it to my user profile """
 @login_required
 def my_user_profile(request):
     

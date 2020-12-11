@@ -605,46 +605,53 @@ class TestNoteDetail(TestCase):
         #make sure note 2 not changed
         self.assertEqual('yay!' , note_2.text)
 
+""" A class named Test Profile User for testing the Profile User """
 class TestProfileUser(TestCase):
     fixtures = ['testing_users', 'testing_users_profile']
 
+    """ testing to check if User is not logge-in, and if the User is not logged in, User will be redirected to login page"""
     def test_user_not_logged_in(self):
         response = self.client.get(reverse('my_user_profile'))
         self.assertRedirects(response, '/accounts/login/?next=/user/profile/')
 
+    """ testing to check if the user is logged in """
     def test_user_logged_in(self):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
         self.assertTemplateUsed(response, 'lmn/users/my_user_profile.html')
         
-        # should have an Submit Info About User
-        self.assertContains(response, 'Submit Info About User')
 
+    """ testing to check if my user profile.html has the edited response"""
     def test_user_edited_form_has_data(self):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
-        #should have an Add User Info Here
-        self.assertContains(response, 'Add User Info Here')
+        #should have Submit Updated User Info
+        self.assertContains(response, 'Submit Updated User Info')
 
+    """ testing for the correct url """
     def test_form_for_correct_url(self):
         self.client.force_login(User.objects.get(pk=2))
         response = self.client.get(reverse('my_user_profile'))
         self.assertContains(response, 'action="/user/profile/')
 
+    """ Using user_profile.json to test if the favorite artist, in the response is in User 1 """
     def test_user_favorite_artist_is_displayed_on_public_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':1}))
         self.assertContains(response, 'Post Malone')
         self.assertTemplateUsed(response, 'lmn/users/user_profile.html')  
 
+    """ Using user_profile.json to test if the bio in the response is in User 2 """
     def test_user_bio_is_displayed_on_public_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertContains(response, 'This bio is for user 2')
         self.assertTemplateUsed(response, 'lmn/users/user_profile.html') 
 
+    """ Using user_profile.json to test if the favorite artist in User 1 is not in User 2 . In this case the favorite artist in User 1 put in the response"""
     def test_user_favorite_artist_is_not_on_another_users_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertNotContains(response, 'Post Malone')     
 
+    """ testing for the correct User after User adds information """
     def test_correct_user_name_shown_after_user_adds_info(self):
         logged_in_user = User.objects.get(pk=2)
         self.client.force_login(logged_in_user)  
