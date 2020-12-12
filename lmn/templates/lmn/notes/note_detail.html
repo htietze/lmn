@@ -8,6 +8,9 @@
 
 <p id="note-title"><b>{{ note.title}}</b></p>
 <p id="note-text">{{ note.text }}</p>
+{% if note.rating %}
+<p class='note-rating'>User rating: {{ note.rating }}/5</p>
+{% endif %}
 {% if note.photo %}
       <p id="note-photo"><img class = "user-image" src="{{ note.photo.url }}" ></p>
 {% endif %}
