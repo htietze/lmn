@@ -1,7 +1,6 @@
-from ..models import Venue, Artist, Note, Show
 from django.urls import reverse
 from django.test import TestCase
-from ..models import Artist, Venue, Show, Note, User
+from lmn.models import Artist, Venue, Show, Note, User
 from django.utils import timezone
 
 
