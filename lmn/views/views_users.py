@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-
+"""Methods for working with registering new users, accessing current users and login"""
 def user_profile(request, user_pk):
     # Get user profile for any user on the site
     user = User.objects.get(pk=user_pk)
@@ -48,6 +48,7 @@ def my_user_profile(request):
 
 
 def register(request):
+    """To register a new user"""
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
