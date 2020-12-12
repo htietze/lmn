@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note
+from .models import Note, Profile
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -12,11 +12,16 @@ class VenueSearchForm(forms.Form):
 class ArtistSearchForm(forms.Form):
     search_name = forms.CharField(label='Artist Name', max_length=200)
 
+class NoteSearchForm(forms.Form):
+    search_term = forms.CharField(label='Note search'  )
+
+
+
 
 class NewNoteForm(forms.ModelForm):
     class Meta:
         model = Note
-        fields = ('title', 'text', 'photo')
+        fields = ('title', 'text', 'photo', 'rating')
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -77,3 +82,9 @@ class UserRegistrationForm(UserCreationForm):
             user.save()
 
         return user
+
+""" Created a form called Profile Form with fields for User Profile """
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('bio', 'favorite_artist', 'favorite_show', 'location', 'favorite_music')

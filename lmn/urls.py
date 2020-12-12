@@ -6,7 +6,7 @@ from . import views
 from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin, views_most_notes
 
 
-# app_name = 'lmn'
+"""URL patterns that link templates with methods in views."""
 
 urlpatterns = [
 
@@ -23,10 +23,12 @@ urlpatterns = [
     path('notes/for_show/<int:show_pk>/', views_notes.notes_for_show, name='notes_for_show'),
     path('notes/add/<int:show_pk>/', views_notes.new_note, name='new_note'),
     path('notes/<int:note_pk>/delete', views_notes.delete_note, name='delete_note'),
+
     path('show_most_notes/<int:note_pk/shows', views_most_notes.show_most_notes, name='show_most_notes'),
     path('notes/<int:note_pk>/edit', views_notes.edit_note, name='edit_note'),
     
     
+
 
     # Artist related
     path('artists/list/', views_artists.artist_list, name='artist_list'),
@@ -40,7 +42,9 @@ urlpatterns = [
     # Account related
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
+    #path('accounts/logout/', views_users.goodbye, name='logout'),
     path('register/', views_users.register, name='register'),
+    path('goodbye_logout', views_users.goodbye, name='goodbye_logout'),
 
 
     #for getting data to database

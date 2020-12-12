@@ -126,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-#TIME_ZONE = 'UTC'
+
 TIME_ZONE='America/Chicago'
 
 
@@ -141,19 +141,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 
-#STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'www', 'static')
 
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if os.getenv('GAE_INSTANCE'):
+    GS_STATIC_FILE_BUCKET = 'lmnop-project5.appspot.com'
+
+    STATIC_URL = f'https://storage.cloud.google.com/{GS_STATIC_FILE_BUCKET}/static/'
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+    GS_BUCKET_NAME = 'user-event-images'
+    MEDIA_URL = f'https://storage.cloud.google.com/{GS_BUCKET_NAME}/media/'
+
+    from google.oauth2 import service_account
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file('lmnop_credentials.json')
 
 
 # Where to send user after successful login, and logout, if no other page is provided.
 LOGIN_REDIRECT_URL = 'my_user_profile'
-LOGOUT_REDIRECT_URL = 'homepage'
-
+LOGOUT_REDIRECT_URL = 'goodbye_logout'
 

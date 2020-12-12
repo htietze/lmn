@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from django.contrib.auth.models import User
-from lmn.forms import NewNoteForm, UserRegistrationForm
+from lmn.forms import NewNoteForm, UserRegistrationForm, ProfileForm
 import string
 
 # Test that forms are validating correctly, and don't accept invalid data
@@ -144,3 +144,26 @@ class LoginFormTests(TestCase):
     # TODO username not case sensitive - bob and BOB and Bob are the same
    
     pass
+
+""" A Profile Form Test  class for testing User Profile Form """
+class ProfileFormTest(TestCase):
+    """ testing the maximum length of the field bio(500), if it is more than assigned length then the form will be invalid """
+    def test_bio_too_long_is_invalid(self):
+        # Max length is 500
+        form_data = { "bio" : "a" * 501 }
+        form = ProfileForm(form_data)
+        self.assertFalse(form.is_valid())
+
+    """ testing the maximum length of the field favorite_artist(200), if it is more than assigned length then the form will be invalid """
+    def test_favorite_artist_long_is_invalid(self):
+        # Max length is 200
+        form_data = { "favorite_artist" : "a" * 201 }
+        form = ProfileForm(form_data)
+        self.assertFalse(form.is_valid())  
+
+    """ testing to see if the location is an empty string and it returns true """
+    def test_location_is_empty(self):
+        empty = ''
+        form_data = { "location" : empty }
+        form = ProfileForm(form_data)
+        self.assertTrue(form.is_valid())      

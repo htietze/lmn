@@ -1,8 +1,10 @@
 {% extends 'lmn/base.html' %}
+{% load static %}
 {% block content %}
 
 
-<!-- A user's profile page.
+<!-- A user's public page.
+
 
 Includes list of user's notes with title and preview of text.
 Text truncated to 200 characters. 
@@ -11,8 +13,30 @@ user_profile is the user that this profile is about
 user is a variable provided to the template and is the current logged-in user 
 
 -->
+<!-- A user profile page with updated information about the user and their notes -->
+<h2 class="center-align">Your Updated Profile</h2>
 
-<h2 id='username_notes'>{{ user_profile.username }}'s notes</h2>
+<p class="account-heading">Username: {{ user_profile.username }}</p>
+<p class="account-heading">Email: {{ user_profile.email}}</p>
+{% if user_profile.profile.bio %}
+    <p> Your Biography: {{ user_profile.profile.bio }}</p>
+{% endif %}
+{% if user_profile.profile.favorite_artist %}
+    <p>Your Favorite Artist: {{ user_profile.profile.favorite_artist }}</p>
+{% endif %}
+{% if user_profile.profile.favorite_show %}
+    <p>Your Favorite Show: {{ user_profile.profile.favorite_show }}</p>
+{% endif %}
+{% if user_profile.profile.location %}
+    <p> Your Favorite Location: {{ user_profile.profile.location }}</p>
+{% endif %}
+{% if user_profile.profile.favorite_music %}
+    <p> Your Favorite Music: {{ user_profile.profile.favorite_music }}</p>
+{% endif %}
+
+
+
+<h2 id='username_notes'>{{ user_profile.username }}'s Notes <i class="fas fa-music"></i></h2>
 
 {% for note in notes %}
 
@@ -23,6 +47,9 @@ user is a variable provided to the template and is the current logged-in user
 
   <p class="note_info">{{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}</p>
   <p class="note_text">{{ note.text|truncatechars:300 }}</p>
+  {% if note.rating %}
+  <p class='note-rating'>User rating: {{ note.rating }}/5</p>
+  {% endif %}
   <p class="note_posted_at">{{ note.posted_date }}</p>
   
 </div>
@@ -33,5 +60,6 @@ user is a variable provided to the template and is the current logged-in user
 
 {% endfor %}
 
+<script src="{% static 'js/confirm_delete.js' %}"></script>
 
 {% endblock %}

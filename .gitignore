@@ -4,14 +4,15 @@ db.sqlite
 __pycache__
 *.pyc
 
-# ignore editor-specific files 
+# ignore editor-specific files
 .vscode
 .idea
 
-# ignore virtual enviroments 
+# ignore virtual enviroments
 venv
 env
 lmnop_credentials.json
 app.yaml
 media
 cloud_sql_proxy
+
