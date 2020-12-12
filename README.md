@@ -89,7 +89,7 @@ http://127.0.0.1:8000
 
 Google Cloud Platform site:
 
-https://www.google.com/url?q=https%3A%2F%2Flmnop-project5.uc.r.appspot.com
+https://lmnop-project5.uc.r.appspot.com/
 ***
 ### Create superuser
 
@@ -99,7 +99,7 @@ enter username and password
 
 will be able to use these to log into admin console at
 
-127.0.0.1:8000/admin
+https://127.0.0.1:8000/admin
 
 ***
 ### Run tests
