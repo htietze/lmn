@@ -9,7 +9,13 @@
   <script src="https://kit.fontawesome.com/d7811e014f.js" crossorigin="anonymous"></script>
 
 </head>
-
+{% if messages %}
+  {% for message in messages %}
+    <div class="message-{{ message.tags }}">
+      <b>{{ message }}</b>
+    </div>
+  {% endfor %}
+{% endif %}
 <body>
 
 <h1>LMN</h1>
@@ -17,6 +23,7 @@
 <a href="{% url 'venue_list' %}">Venues</a>
 <a href="{% url 'artist_list' %}">Artists</a>
 <a href="{% url 'latest_notes' %}">Notes</a>
+<a href="{% url 'show_most_notes'%}"> Top 5 Shows </a>
 
 <!-- When a User logs in, will be directed to my user profile -->
 {% if user.is_authenticated %}
@@ -35,13 +42,13 @@
 {% block content %}
 {% endblock %}
 
-{% if messages %}
-  {% for message in messages %}
-    <div class="message-{{ message.tags }}">
-      <b>{{ message }}</b>
-    </div>
-  {% endfor %}
-{% endif %}
+<!--{% if messages %}-->
+<!--  {% for message in messages %}-->
+<!--    <div class="message-{{ message.tags }}">-->
+<!--      <b>{{ message }}</b>-->
+<!--    </div>-->
+<!--  {% endfor %}-->
+<!--{% endif %}-->
 
 </body>
 </html>

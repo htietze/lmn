@@ -19,7 +19,8 @@ def new_note(request, show_pk):
     """ Add a new note including photo for a show"""
 
     show = get_object_or_404(Show, pk=show_pk)
-
+    
+    
     if request.method == 'POST':
         form = NewNoteForm(request.POST, request.FILES)
         if form.is_valid():
@@ -30,12 +31,13 @@ def new_note(request, show_pk):
             if request.POST.get('post_type') == 'Tweet and Add Note':
                 tweet_note(request, note)
 
-            return redirect('my_user_profile')
+            return redirect('latest_notes')
 
     else :
         form = NewNoteForm()
 
     return render(request, 'lmn/notes/new_note.html' , { 'form': form , 'show': show })
+    
 
 
 def latest_notes(request):
@@ -75,7 +77,9 @@ def note_detail(request, note_pk):
     if note.user != request.user:
         return HttpResponseForbidden()
       
+
     form = NewNoteForm(instance=note)  # Pre-populate with data from this Note instance
+
     return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
 
 

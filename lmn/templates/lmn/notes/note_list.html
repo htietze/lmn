@@ -4,7 +4,7 @@
 
 <h2>Note List</h2>
 
-<P>Note Search</p>
+
   <form action="{% url 'latest_notes' %}">
     {{ search_form }}
     <input type='submit' value='Search'>
@@ -29,7 +29,11 @@
   
 {% endif %}
 
+<h3>{{notes|length}} Notes</h3> 
+
+
 {% for note in notes %}
+
   <div id="note_{{ note.pk }}">
     <h3 class="note-title">{{ note.title }}</h3>
 

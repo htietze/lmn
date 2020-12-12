@@ -1,3 +1,5 @@
+from lmn.views.views_venues import artists_at_venue
+import unittest
 from django.test import TestCase, Client
 
 from django.urls import reverse
@@ -9,6 +11,9 @@ from django.contrib.auth.models import User
 from lmnop_project import helpers
 import re, datetime
 from datetime import timezone
+
+from django.db.models import Count
+
 import os
 
 import tempfile
@@ -372,7 +377,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         #posted_date = new_note_query.first().posted_date
         #self.assertEqual(now.date(), posted_date.date())  # TODO check time too
 
-    def test_redirect_to_user_profile_after_save(self):
+    def test_redirect_to_latest_notes_after_save(self):
 
         initial_note_count = Note.objects.count()
 
@@ -380,7 +385,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         response = self.client.post(new_note_url, {'text':'ok', 'title':'blah blah' }, follow=True)
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
-        self.assertRedirects(response, reverse('my_user_profile'))#} , kwargs = {'user_pk': 1}))
+        self.assertRedirects(response, reverse('latest_notes'))#} , kwargs = {'user_pk': 1}))
         
 
 class TestDeleteNote(TestCase):
@@ -631,6 +636,9 @@ class TestProfileUser(TestCase):
         self.assertContains(response, 'Post Malone')
         self.assertTemplateUsed(response, 'lmn/users/user_profile.html')  
 
+
+
+
     """ Using user_profile.json to test if the bio in the response is in User 2 """
     def test_user_bio_is_displayed_on_public_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
@@ -708,3 +716,4 @@ class TestImageUpload(TestCase):
                 self.assertEqual(403, resp.status_code)
                 note_2 = Note.objects.get(pk=2)
                 self.assertFalse(note_2.photo)  
+
