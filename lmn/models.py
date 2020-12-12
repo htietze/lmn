@@ -46,10 +46,12 @@ class Show(models.Model):
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
+
     class Meta:
         #to avoid adding a duplicate show, these 3 elements considered together must be unique
         #if a show with the same 3 elements is found, it will not be added to the database
         unique_together = [['show_date', 'artist', 'venue']]
+
     def __str__(self):
         return f'Artist: {self.artist} at: {self.venue} on: {self.show_date}'
 
@@ -61,6 +63,7 @@ class Note(models.Model):
     title = models.CharField(max_length=200, blank=False)
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
+
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
 
     
@@ -83,6 +86,7 @@ class Note(models.Model):
             self.delete_photo(self.photo)
 
         super().delete(*args, **kwargs)
+
 
 
     def __str__(self):

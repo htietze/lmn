@@ -5,7 +5,7 @@ from . import views
 from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin
 
 
-# app_name = 'lmn'
+"""URL patterns that link templates with methods in views."""
 
 urlpatterns = [
 

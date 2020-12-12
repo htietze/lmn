@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
+""" Get all of the venues """
 
 def venue_list(request):
     form = VenueSearchForm()
@@ -38,5 +39,6 @@ def artists_at_venue(request, venue_pk):   # pk = venue_pk
 
 
 def venue_detail(request, venue_pk):
+    """Show details about the venue - name and location"""
     venue = get_object_or_404(Venue, pk=venue_pk)
     return render(request, 'lmn/venues/venue_detail.html' , { 'venue': venue })

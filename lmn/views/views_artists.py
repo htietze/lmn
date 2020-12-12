@@ -22,6 +22,7 @@ def venues_for_artist(request, artist_pk):   # pk = artist_pk
 
 
 def artist_list(request):
+    """Show artist list and search for Artist"""
     form = ArtistSearchForm()
     search_name = request.GET.get('search_name')
     if search_name:
