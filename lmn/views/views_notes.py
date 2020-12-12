@@ -30,7 +30,7 @@ def new_note(request, show_pk):
             if request.POST.get('post_type') == 'Tweet and Add Note':
                 tweet_note(request, note)
 
-            return redirect('my_user_profile')
+            return redirect('latest_notes')
 
     else :
         form = NewNoteForm()
