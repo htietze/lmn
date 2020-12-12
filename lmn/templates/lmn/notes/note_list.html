@@ -45,14 +45,14 @@
       <a href="{% url 'notes_for_show' show_pk=note.show.pk %}">{{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}</a>
     </p>
 
-
     <p class="note-info">Posted on {{ note.posted_date }} by
       <a class='user' href="{% url 'user_profile' user_pk=note.user.pk %}">{{ note.user.username }}</a>
     </p>
 
     <p class='note-text'>{{ note.text|truncatechars:100 }}</p>
-
-
+    {% if note.rating %}
+    <p class='note-rating'>User rating: {{ note.rating }}/5</p>
+    {% endif %}
 
   </div>
 
@@ -60,7 +60,6 @@
       <p id="note-photo"><img class = "user-image" src="{{ note.photo.url }}"></p>
     {% endif %}
 
-    
   </div>  
 
 
