@@ -33,7 +33,6 @@ def artist_list(request):
     # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
     # created new page object to be supplied to rendered page
-    #TODO change number of objects supplied to 20 before deployment
     artists = helpers.pg_records(page, artists, 5)
 
     return render(request, 'lmn/artists/artist_list.html', { 'artists': artists, 'form': form, 'search_term': search_name })

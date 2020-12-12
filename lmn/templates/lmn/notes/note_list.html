@@ -8,10 +8,9 @@
   <form action="{% url 'latest_notes' %}">
     {{ search_form }}
     <input type='submit' value='Search'>
-  
   </form>
 
-  <a href="{% url 'latest_notes' %}">
+<a href="{% url 'latest_notes' %}">
     <button>Clear Search</button>
 </a>    
 
@@ -23,11 +22,6 @@
   <h2 id='note-list-title'></h2>
 {% endif %}
 
-
-
-
-
-
 {% if show %}
   <h2 id="show-title">Notes for {{ show.artist.name }} at {{ show.venue.name }} on {{ show.show_date }}</h2>
 {% else %}
@@ -35,9 +29,7 @@
   
 {% endif %}
 
-
 {% for note in notes %}
-
   <div id="note_{{ note.pk }}">
     <h3 class="note-title">{{ note.title }}</h3>
 
@@ -60,9 +52,7 @@
       <p id="note-photo"><img class = "user-image" src="{{ note.photo.url }}"></p>
     {% endif %}
 
-  </div>  
-
-
+  </div>
   <hr>
 
 {% empty %}
@@ -86,11 +76,11 @@ display link to add new note for that show. -->
     <div class="section-inner clearfix">
         <p>
             {% if notes.has_previous %}
-                <a href="?page={{ notes.previous_page_number }}">&lt; Prev</a> |
+              <a href="?page={{ notes.previous_page_number }}">&lt; Prev</a> |
             {% endif %}
 
             {% if notes.has_next %}
-                <a href="?page={{ notes.next_page_number }}">Next &gt;</a>
+              <a href="?page={{ notes.next_page_number }}">Next &gt;</a>
             {% endif %}
 
             <span>Page {{ notes.number }} of {{ notes.paginator.num_pages }}</span>
@@ -99,5 +89,3 @@ display link to add new note for that show. -->
 </div>
 
 {% endblock %}
-
-

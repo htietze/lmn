@@ -4,8 +4,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def pg_records(page, list, num):
     # creates paginator object splitting the list obtained in the view into groups of num parameter
     paginator = Paginator(list, num)
-    # gets the page parameter from the query string
-    # page = request.GET.get('page')
 
     try:
         # if the page parameter exists create Page object

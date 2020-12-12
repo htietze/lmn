@@ -11,7 +11,6 @@ access_token = os.getenv('T_ACCESS_TOK')
 access_secret = os.getenv('T_ACCESS_TOK_SEC')
 
 
-
 def tweet_note(request, note):
     # the note used for the tweet needs to be in a different format
     # so it's adapted into a more usable string, this can also truncate it

@@ -42,8 +42,6 @@ def latest_notes(request):
 
     """Show most recent notes """
     notes = Note.objects.all().order_by('-posted_date')
-
-
     search_form =NoteSearchForm(request.GET)
     if search_form.is_valid():
         search_term = search_form.cleaned_data['search_term']
@@ -55,7 +53,6 @@ def latest_notes(request):
     # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
     # Calls helper function to paginate records. (request, list of objects, how many entries per page)
-    #TODO change number of objects supplied to 20 before deployment
     notes = helpers.pg_records(page, notes, 5)
     return render(request, 'lmn/notes/note_list.html', {'notes': notes, 'search_form': search_form})
 
@@ -67,7 +64,6 @@ def notes_for_show(request, show_pk):
 
     show = Show.objects.get(pk=show_pk)  
     return render(request, 'lmn/notes/notes_for_show.html', { 'show': show, 'notes': notes })
-
 
 
 def note_detail(request, note_pk):
@@ -83,8 +79,6 @@ def note_detail(request, note_pk):
     return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
 
 
-
-    
 @login_required
 def edit_note(request, note_pk):
     """Make changes to a note's title, text, photo"""

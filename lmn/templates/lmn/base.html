@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="{% static 'css/base_style.css' %}" type="text/css"></link>
   <!-- fontawesome provides icons -->
   <script src="https://kit.fontawesome.com/d7811e014f.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -22,13 +23,13 @@
 
   <span id='welcome-user-msg'>You are logged in, <a href="{% url 'my_user_profile' %}">{{ user.username }}</a>.  <a href="{% url 'logout' %}">Logout</a></span>
   
-
 {% else %}
 
   <span id='login-or-sign-up'><a href="{% url 'login' %}?next={{ request.path }}">Login or sign up</a></span>
 
 {% endif %}
 </div>
+
 <hr>
 
 {% block content %}

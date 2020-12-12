@@ -16,8 +16,6 @@ from PIL import Image
 import filecmp
 
 
-# TODO verify correct templates are rendered.
-
 class TestEmptyViews(TestCase):
 
     ''' main views - the ones in the navigation menu'''
@@ -169,7 +167,6 @@ class TestArtistViews(TestCase):
         self.assertEqual(0, len(shows))
 
 
-
 class TestVenues(TestCase):
 
         fixtures = ['testing_venues', 'testing_artists', 'testing_shows']
@@ -306,7 +303,6 @@ class TestVenues(TestCase):
 
             response = self.client.get(reverse('artists_at_venue', kwargs={'venue_pk':1}))
             self.assertTemplateUsed(response, 'lmn/artists/artist_list_for_venue.html')
-
 
 
 class TestAddNoteUnauthentictedUser(TestCase):
@@ -476,7 +472,6 @@ class TestNotes(TestCase):
         self.assertEqual(third.pk, 1)
 
 
-
     def test_notes_for_show_view(self):
         # Verify correct list of notes shown for a Show, most recent first
         # Show 1 has 2 notes with PK = 2 (most recent) and PK = 1
@@ -508,7 +503,6 @@ class TestSearchNotes(TestCase):
     fixtures = ['testing_artists', 'testing_venues', 'testing_shows','testing_notes', 'testing_users']
    
     def test_note_search_matches(self):
-        
         response = self.client.get(reverse('latest_notes'), {'search_term' :'super'} )
         self.assertEqual(len(response.context['notes']), 1)
         page1 = response.context['notes']
@@ -561,8 +555,6 @@ class TestUserAuthentication(TestCase):
 
 
     def test_user_registration_redirects_to_correct_page(self):
-        # TODO If user is browsing site, then registers, once they have registered, they should
-        # be redirected to the last page they were at, not the homepage.
         response = self.client.post(reverse('register'), {'username':'sam12345', 'email':'sam@sam.com', 'password1':'feRpj4w4pso3az@1!2', 'password2':'feRpj4w4pso3az@1!2', 'first_name':'sam', 'last_name' : 'sam'}, follow=True)
         new_user = authenticate(username='sam12345', password='feRpj4w4pso3az@1!2')
         self.assertRedirects(response, reverse('my_user_profile'))   
@@ -619,7 +611,6 @@ class TestProfileUser(TestCase):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
         self.assertTemplateUsed(response, 'lmn/users/my_user_profile.html')
-        
 
     """ testing to check if my user profile.html has the edited response"""
     def test_user_edited_form_has_data(self):
@@ -657,18 +648,6 @@ class TestProfileUser(TestCase):
         self.client.force_login(logged_in_user)  
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertContains(response, '2')
-
-
-    
-
-    
-    
-             
-    
-             
-
-
-
 
 
 class TestImageUpload(TestCase):
