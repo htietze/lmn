@@ -2,22 +2,20 @@
 {% load static %}
 {% block content %}
 
-
 <!-- A user's public page.
-
-
 Includes list of user's notes with title and preview of text.
 Text truncated to 200 characters. 
 
 user_profile is the user that this profile is about 
 user is a variable provided to the template and is the current logged-in user 
-
 -->
+
 <!-- A user profile page with updated information about the user and their notes -->
 <h2 class="center-align">Your Updated Profile</h2>
 
 <p class="account-heading">Username: {{ user_profile.username }}</p>
 <p class="account-heading">Email: {{ user_profile.email}}</p>
+
 {% if user_profile.profile.bio %}
     <p> Your Biography: {{ user_profile.profile.bio }}</p>
 {% endif %}
@@ -33,8 +31,6 @@ user is a variable provided to the template and is the current logged-in user
 {% if user_profile.profile.favorite_music %}
     <p> Your Favorite Music: {{ user_profile.profile.favorite_music }}</p>
 {% endif %}
-
-
 
 <h2 id='username_notes'>{{ user_profile.username }}'s Notes <i class="fas fa-music"></i></h2>
 

@@ -26,9 +26,6 @@ urlpatterns = [
 
     path('show_most_notes/<int:note_pk/shows', views_most_notes.show_most_notes, name='show_most_notes'),
     path('notes/<int:note_pk>/edit', views_notes.edit_note, name='edit_note'),
-    
-    
-
 
     # Artist related
     path('artists/list/', views_artists.artist_list, name='artist_list'),
@@ -42,7 +39,6 @@ urlpatterns = [
     # Account related
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
-    #path('accounts/logout/', views_users.goodbye, name='logout'),
     path('register/', views_users.register, name='register'),
     path('goodbye_logout', views_users.goodbye, name='goodbye_logout'),
 

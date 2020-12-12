@@ -19,7 +19,7 @@ User._meta.get_field('email')._blank = False
 User._meta.get_field('last_name')._blank = False
 User._meta.get_field('first_name')._blank = False
 
-
+# Used later to supply inputs for a dropdown menu
 rating_choice = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'))
 
 """ A music artist """
@@ -71,7 +71,6 @@ class Note(models.Model):
     rating = models.CharField(choices=rating_choice, max_length=3, blank=True, null=True)
 
     
-
     def save(self, *args, **kwargs):
         #get reference to previous versionof this note
         old_note = Note.objects.filter(pk=self.pk).first()
@@ -80,9 +79,11 @@ class Note(models.Model):
                 self.delete_photo(old_note.photo) #delete the old photo
         super().save(*args, **kwargs) 
 
+
     def delete_photo(self, photo):
         if default_storage.exists(photo.name):
             default_storage.delete(photo.name)
+
 
     #when a Note is deleted, delete the photo file too
     def delete(self, *args, **kwargs):
@@ -92,9 +93,9 @@ class Note(models.Model):
         super().delete(*args, **kwargs)
 
 
-
     def __str__(self):
         return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
+
 
 """ A User Profile class which is an extension of django user profile updating and adding more info about user """
 class Profile(models.Model):
@@ -108,13 +109,13 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music}'
 
-""" Whenever an instance of a User is being saved to the database this will notify django """
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
+    """ Whenever an instance of a User is being saved to the database this will notify django """
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
 
-""" The receiver notifies django when an instance of of a User is being saved """
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    """ The receiver notifies django when an instance of of a User is being saved """
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()

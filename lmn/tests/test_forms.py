@@ -34,7 +34,6 @@ class NewNoteFormTests(TestCase):
             self.assertFalse(form.is_valid())
 
 
-
     def test_title_too_long_is_invalid(self):
         # Max length is 200
         form_data = { "title" : "a" * 201 }
@@ -105,9 +104,7 @@ class RegistrationFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
 
-    # TODO make this test pass!
     def test_register_user_with_username_already_in_db_case_insensitive_fails(self):
-
         # Create a user with username bob
         bob = User(username='bob', email='bob@bob.com')
         bob.save()
@@ -121,7 +118,6 @@ class RegistrationFormTests(TestCase):
             self.assertFalse(form.is_valid())
 
 
-    # TODO make this test pass!
     def test_register_user_with_email_already_in_db_case_insensitive_fails(self):
 
         # Create a user with username bob
@@ -137,12 +133,7 @@ class RegistrationFormTests(TestCase):
             self.assertFalse(form.is_valid())
 
 
-
-
-class LoginFormTests(TestCase):
-
-    # TODO username not case sensitive - bob and BOB and Bob are the same
-   
+class LoginFormTests(TestCase):   
     pass
 
 """ A Profile Form Test  class for testing User Profile Form """

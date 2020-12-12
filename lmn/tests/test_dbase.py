@@ -60,11 +60,8 @@ class TestTicketMasterAPI(TestCase):
         venue3.save()
         venue3.id
         show3 = Show(show_date='2021-07-31 22:00:00', artist = artist3, venue = venue3)
-        #show3.show_date.isoformat()
         show3.save()
         #try to add a duplicate show
         show4 = Show(show_date='2021-07-31 22:00:00', artist = artist3, venue = venue3)
         with self.assertRaises(IntegrityError):
             show4.save()
-
-        
