@@ -35,8 +35,12 @@
   
 {% endif %}
 
+<h3>{{notes|length}} Notes</h3> 
+
 
 {% for note in notes %}
+
+  
 
   <div id="note_{{ note.pk }}">
     <h3 class="note-title">{{ note.title }}</h3>

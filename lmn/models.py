@@ -49,6 +49,7 @@ class Show(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
 
+
     class Meta:
         #to avoid adding a duplicate show, these 3 elements considered together must be unique
         #if a show with the same 3 elements is found, it will not be added to the database

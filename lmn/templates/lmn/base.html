@@ -16,6 +16,7 @@
 <a href="{% url 'venue_list' %}">Venues</a>
 <a href="{% url 'artist_list' %}">Artists</a>
 <a href="{% url 'latest_notes' %}">Notes</a>
+<a href="{% url 'show_most_notes'%}"> Top 5 Shows </a>
 
 <!-- When a User logs in, will be directed to my user profile -->
 {% if user.is_authenticated %}
