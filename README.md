@@ -30,7 +30,12 @@ allows other users to view these details as well as a list of their notes.
 
 ![alt text](media/readme_images/del_edit.png)
 * Added a new tab link that allows the user to view the top 5 pages with the most notes
+
+![alt text](media/readme_images/topfive.png)
+
 * Added feature that lets the user add a rating to their notes.
+![alt text](media/readme_images/rating.png)
+
 ***
 ### To install
 
