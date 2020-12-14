@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
+""" Get all of the venues """
 
 def venue_list(request):
     form = VenueSearchForm()
@@ -22,7 +23,6 @@ def venue_list(request):
     # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
     # created new page object to be supplied to rendered page
-    #TODO change number of objects supplied to 20 before deployment
     venues = helpers.pg_records(page, venues, 5)
 
     return render(request, 'lmn/venues/venue_list.html', { 'venues': venues, 'form': form, 'search_term': search_name })
@@ -38,5 +38,6 @@ def artists_at_venue(request, venue_pk):   # pk = venue_pk
 
 
 def venue_detail(request, venue_pk):
+    """Show details about the venue - name and location"""
     venue = get_object_or_404(Venue, pk=venue_pk)
     return render(request, 'lmn/venues/venue_detail.html' , { 'venue': venue })

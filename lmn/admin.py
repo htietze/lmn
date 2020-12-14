@@ -1,7 +1,4 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import Venue, Artist, Note, Show
 
 admin.site.register(Venue)

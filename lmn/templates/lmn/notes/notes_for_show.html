@@ -2,13 +2,11 @@
 {% load static %}
 {% block content %}
 
-
 {% if show %}
   <h2 id="show-title">Notes for {{ show.artist.name }} at {{ show.venue.name }} on {{ show.show_date }}</h2>
 {% else %}
   <h2>Latest Notes</h2>
 {% endif %}
-
 
 {% for note in notes %}
 
@@ -18,17 +16,17 @@
         </h3>
 
     <p class="show-info">
-    {{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}
+      {{ note.show.artist.name }} at {{ note.show.venue.name }} on {{ note.show.show_date }}
     </p>
-
-
 
     <p class="note-info">Posted on {{ note.posted_date }} by 
       <a class='user' href="{% url 'user_profile' user_pk=note.user.pk %}">{{ note.user.username }}</a>
     </p>
 
     <p class='note-text'>{{ note.text|truncatechars:100 }}</p>
-
+    {% if note.rating %}
+    <p class='note-rating'>User rating: {{ note.rating }}/5</p>
+    {% endif %}
     
   </div>  
 
@@ -50,4 +48,5 @@ display link to add new note for that show. -->
 {% endif %}
 
 <script src="{% static 'js/confirm_delete.js' %}"></script>
+
 {% endblock %}

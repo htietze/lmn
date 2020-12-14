@@ -1,7 +1,6 @@
 from django.test import TestCase
 from lmnop_project import helpers
 from lmn.models import Artist, Venue, Show, Note, User
-from datetime import datetime
 from django.utils import timezone
 
 

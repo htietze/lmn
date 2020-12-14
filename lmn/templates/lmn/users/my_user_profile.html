@@ -6,9 +6,9 @@
 {% endblock %}
 {% block content %}
 
+
 {% if star == "five_star" %}
 p {
-  
   
   font-size: 50%;
 }
@@ -36,28 +36,54 @@ p {
 <P>Star: You don't have star reward </p>
 
 {% endif %}
+
 <!-- A user's profile page-->
 
-{% if messages %}
-  <div class="messages">
-    {% for message in messages %}
-        <p class="{{message.tags}}">{{ message }}</p>
-    {% endfor %}
-  </div>
+<!-- A user profile page where a User can update his profile like bio, favorite music, favorite artist , location and also the User's email and username are displayed -->
+<h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
+
+<p class="account-heading">Username: {{ user_profile.username }}</p>
+<p class="account-heading">Email: {{ user_profile.email}}</p>
+
+<hr>
+
+{% if user_profile.profile.bio %}
+<div>
+    <p>Bio: {{ user_profile.profile.bio }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.favorite_artist %}
+<div>
+    <p>Fav Artist: {{ user_profile.profile.favorite_artist }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.favorite_show %}
+<div>
+    <p>Fav Show: {{ user_profile.profile.favorite_show }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.location %}
+<div>
+    <p>Location: {{ user_profile.profile.location }}</p>
+</div>
+{% endif %}
+{% if user_profile.profile.favorite_music %}
+<div>
+    <p>Fav Music: {{ user_profile.profile.favorite_music }}</p>
+</div>
 {% endif %}
 
-<h2 id='username_profile'>{{ user_profile.username }}'s Profile</h2>
-<p>Add User Info Here</p>
+<hr>
+
+<h2>Update User Info</h2>
 
 <form method="POST" action="{% url 'my_user_profile' %}">
     <div>
       {% csrf_token %}
       {{ user_form.as_p }}
     </div>
-    <input type='submit' value='Submit Info About User'>
+    <input type='submit' class="submit" value='Submit Updated User Info'>
     
 </form>
-
-
 
 {% endblock %}

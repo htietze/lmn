@@ -9,7 +9,6 @@
     <input type='submit' class='search' value='Search'>
   </form>
 
-
 {% if search_term %}
   <h2 id='artist-list-title'>Artists matching '{{ search_term }}' 
     <a href="{% url 'artist_list' %}" id='clear_search'>(clear)</a>
@@ -17,7 +16,6 @@
 {% else %}
   <h2 id='artist-list-title'>All artists</h2>
 {% endif %}
-
 
 {% for artist in artists %}
 

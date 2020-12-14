@@ -5,21 +5,16 @@ from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 from django.db.models import Count
 
-
-
-# Every model gets a primary key field by default.
-
-# Users, venues, shows, artists, notes
-
-# User is provided by Django. The email field is not unique by
-# default, so add this to prevent more than one user with the same email.
 User._meta.get_field('email')._unique = True
+
 
 #Require email, first name and last name
 User._meta.get_field('email')._blank = False
 User._meta.get_field('last_name')._blank = False
 User._meta.get_field('first_name')._blank = False
 
+# Used later to supply inputs for a dropdown menu
+rating_choice = (('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5'))
 
 """ A music artist """
 class Artist(models.Model):
@@ -47,10 +42,13 @@ class Show(models.Model):
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
+
+
     class Meta:
         #to avoid adding a duplicate show, these 3 elements considered together must be unique
         #if a show with the same 3 elements is found, it will not be added to the database
         unique_together = [['show_date', 'artist', 'venue']]
+
     def __str__(self):
         return f'Artist: {self.artist} at: {self.venue} on: {self.show_date}'
 
@@ -63,10 +61,9 @@ class Note(models.Model):
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
-    #updatednum_of_user_note = models.IntegerField(blank=True, null=True)
+    rating = models.CharField(choices=rating_choice, max_length=3, blank=True, null=True)
 
     
-
     def save(self, *args, **kwargs):
         #get reference to previous versionof this note
         user_notes = Note.objects.filter(user=self.user).count()
@@ -79,9 +76,11 @@ class Note(models.Model):
                 self.delete_photo(old_note.photo) #delete the old photo
         super().save(*args, **kwargs) 
 
+
     def delete_photo(self, photo):
         if default_storage.exists(photo.name):
             default_storage.delete(photo.name)
+
 
     #when a Note is deleted, delete the photo file too
     def delete(self, *args, **kwargs):
@@ -94,6 +93,8 @@ class Note(models.Model):
     def __str__(self):
         return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo} '
 
+
+""" A User Profile class which is an extension of django user profile updating and adding more info about user """
 class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -106,6 +107,12 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music} {self. updatednum_of_user_note}'
 
+    """ Whenever an instance of a User is being saved to the database this will notify django """
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -116,3 +123,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
     
+
+    """ The receiver notifies django when an instance of of a User is being saved """
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
+

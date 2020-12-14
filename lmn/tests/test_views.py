@@ -1,22 +1,16 @@
-from django.test import TestCase, Client
 
+from django.test import TestCase
 from django.urls import reverse
 from django.contrib import auth
 from django.contrib.auth import authenticate
-
 from lmn.models import Venue, Artist, Note, Show,Profile
 from django.contrib.auth.models import User
-from lmnop_project import helpers
 import re, datetime
 from datetime import timezone
 import os
-
 import tempfile
 from PIL import Image
-import filecmp
 
-
-# TODO verify correct templates are rendered.
 
 class TestEmptyViews(TestCase):
 
@@ -169,7 +163,6 @@ class TestArtistViews(TestCase):
         self.assertEqual(0, len(shows))
 
 
-
 class TestVenues(TestCase):
 
         fixtures = ['testing_venues', 'testing_artists', 'testing_shows']
@@ -308,7 +301,6 @@ class TestVenues(TestCase):
             self.assertTemplateUsed(response, 'lmn/artists/artist_list_for_venue.html')
 
 
-
 class TestAddNoteUnauthentictedUser(TestCase):
 
     fixtures = [ 'testing_artists', 'testing_venues', 'testing_shows' ]  # Have to add artists and venues because of foreign key constrains in show
@@ -376,7 +368,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         #posted_date = new_note_query.first().posted_date
         #self.assertEqual(now.date(), posted_date.date())  # TODO check time too
 
-    def test_redirect_to_user_profile_after_save(self):
+    def test_redirect_to_latest_notes_after_save(self):
 
         initial_note_count = Note.objects.count()
 
@@ -384,7 +376,7 @@ class TestAddNotesWhenUserLoggedIn(TestCase):
         response = self.client.post(new_note_url, {'text':'ok', 'title':'blah blah' }, follow=True)
         new_note = Note.objects.filter(text='ok', title='blah blah').first()
 
-        self.assertRedirects(response, reverse('my_user_profile'))#} , kwargs = {'user_pk': 1}))
+        self.assertRedirects(response, reverse('latest_notes'))#} , kwargs = {'user_pk': 1}))
         
 
 class TestDeleteNote(TestCase):
@@ -477,7 +469,6 @@ class TestNotes(TestCase):
         self.assertEqual(third.pk, 1)
 
 
-
     def test_notes_for_show_view(self):
         # Verify correct list of notes shown for a Show, most recent first
         # Show 1 has 2 notes with PK = 2 (most recent) and PK = 1
@@ -509,7 +500,6 @@ class TestSearchNotes(TestCase):
     fixtures = ['testing_artists', 'testing_venues', 'testing_shows','testing_notes', 'testing_users']
    
     def test_note_search_matches(self):
-        
         response = self.client.get(reverse('latest_notes'), {'search_term' :'super'} )
         self.assertEqual(len(response.context['notes']), 1)
         page1 = response.context['notes']
@@ -562,8 +552,6 @@ class TestUserAuthentication(TestCase):
 
 
     def test_user_registration_redirects_to_correct_page(self):
-        # TODO If user is browsing site, then registers, once they have registered, they should
-        # be redirected to the last page they were at, not the homepage.
         response = self.client.post(reverse('register'), {'username':'sam12345', 'email':'sam@sam.com', 'password1':'feRpj4w4pso3az@1!2', 'password2':'feRpj4w4pso3az@1!2', 'first_name':'sam', 'last_name' : 'sam'}, follow=True)
         new_user = authenticate(username='sam12345', password='feRpj4w4pso3az@1!2')
         self.assertRedirects(response, reverse('my_user_profile'))   
@@ -606,51 +594,61 @@ class TestNoteDetail(TestCase):
         #make sure note 2 not changed
         self.assertEqual('yay!' , note_2.text)
 
+""" A class named Test Profile User for testing the Profile User """
 class TestProfileUser(TestCase):
     fixtures = ['testing_users', 'testing_users_profile']
 
+    """ testing to check if User is not logge-in, and if the User is not logged in, User will be redirected to login page"""
     def test_user_not_logged_in(self):
         response = self.client.get(reverse('my_user_profile'))
         self.assertRedirects(response, '/accounts/login/?next=/user/profile/')
 
+    """ testing to check if the user is logged in """
     def test_user_logged_in(self):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
         self.assertTemplateUsed(response, 'lmn/users/my_user_profile.html')
-        
-        # should have an Submit Info About User
-        self.assertContains(response, 'Submit Info About User')
 
+    """ testing to check if my user profile.html has the edited response"""
     def test_user_edited_form_has_data(self):
         self.client.force_login(User.objects.first())
         response = self.client.get(reverse('my_user_profile'))
-        #should have an Add User Info Here
-        self.assertContains(response, 'Add User Info Here')
+        #should have Submit Updated User Info
+        self.assertContains(response, 'Submit Updated User Info')
 
+    """ testing for the correct url """
     def test_form_for_correct_url(self):
         self.client.force_login(User.objects.get(pk=2))
         response = self.client.get(reverse('my_user_profile'))
         self.assertContains(response, 'action="/user/profile/')
 
+    """ Using user_profile.json to test if the favorite artist, in the response is in User 1 """
     def test_user_favorite_artist_is_displayed_on_public_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':1}))
         self.assertContains(response, 'Post Malone')
         self.assertTemplateUsed(response, 'lmn/users/user_profile.html')  
 
+
+
+
+    """ Using user_profile.json to test if the bio in the response is in User 2 """
     def test_user_bio_is_displayed_on_public_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertContains(response, 'This bio is for user 2')
         self.assertTemplateUsed(response, 'lmn/users/user_profile.html') 
 
+    """ Using user_profile.json to test if the favorite artist in User 1 is not in User 2 . In this case the favorite artist in User 1 put in the response"""
     def test_user_favorite_artist_is_not_on_another_users_profile_page(self):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertNotContains(response, 'Post Malone')     
 
+    """ testing for the correct User after User adds information """
     def test_correct_user_name_shown_after_user_adds_info(self):
         logged_in_user = User.objects.get(pk=2)
         self.client.force_login(logged_in_user)  
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertContains(response, '2')
+
 
     def test_user_badge(self):
         initial = Profile.objects.count()
@@ -659,18 +657,6 @@ class TestProfileUser(TestCase):
         note_query = Profile.objects.filter(updatednum_of_user_note=1)
         self.assertEqual(note_query.count(), 1)
        
-      
-    
-
-    
-    
-             
-    
-             
-
-
-
-
 
 class TestImageUpload(TestCase):
 
@@ -730,3 +716,4 @@ class TestImageUpload(TestCase):
                 self.assertEqual(403, resp.status_code)
                 note_2 = Note.objects.get(pk=2)
                 self.assertFalse(note_2.photo)  
+

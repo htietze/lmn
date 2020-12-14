@@ -15,8 +15,12 @@ from lmnop_project import helpers
 
 @login_required
 def new_note(request, show_pk):
-    show = get_object_or_404(Show, pk=show_pk)
 
+    """ Add a new note including photo for a show"""
+
+    show = get_object_or_404(Show, pk=show_pk)
+    
+    
     if request.method == 'POST':
         form = NewNoteForm(request.POST, request.FILES)
         if form.is_valid():
@@ -27,16 +31,19 @@ def new_note(request, show_pk):
             if request.POST.get('post_type') == 'Tweet and Add Note':
                 tweet_note(request, note)
 
-            return redirect('my_user_profile')
+            return redirect('latest_notes')
 
     else :
         form = NewNoteForm()
 
     return render(request, 'lmn/notes/new_note.html' , { 'form': form , 'show': show })
+    
 
 
 def latest_notes(request):
 
+    """Show most recent notes """
+    notes = Note.objects.all().order_by('-posted_date')
     search_form =NoteSearchForm(request.GET)
     if search_form.is_valid():
         search_term = search_form.cleaned_data['search_term']
@@ -48,12 +55,12 @@ def latest_notes(request):
     # get page number to be supplied to pagination for page number display
     page = request.GET.get('page')
     # Calls helper function to paginate records. (request, list of objects, how many entries per page)
-    #TODO change number of objects supplied to 20 before deployment
     notes = helpers.pg_records(page, notes, 5)
     return render(request, 'lmn/notes/note_list.html', {'notes': notes, 'search_form': search_form})
 
     
 def notes_for_show(request, show_pk):
+    """Display notes for a particular show. """
     # Notes for show, most recent first
     notes = Note.objects.filter(show=show_pk).order_by('-posted_date')
 
@@ -61,20 +68,24 @@ def notes_for_show(request, show_pk):
     return render(request, 'lmn/notes/notes_for_show.html', { 'show': show, 'notes': notes })
 
 
-
 def note_detail(request, note_pk):
+
+    """ Show details (title, text, photo) about one particular note, by note_pk"""
+    #only show user's notes if logged in
+
     note = get_object_or_404(Note, pk=note_pk)
     if note.user != request.user:
         return HttpResponseForbidden()
       
+
     form = NewNoteForm(instance=note)  # Pre-populate with data from this Note instance
+
     return render(request, 'lmn/notes/note_detail.html', {'note': note, 'form': form} )
 
 
-
-    
 @login_required
 def edit_note(request, note_pk):
+    """Make changes to a note's title, text, photo"""
     note = get_object_or_404(Note, pk=note_pk)
     #need to get the show Id as saving the note requires that
     show = get_object_or_404(Show, pk= note.show_id)
@@ -96,6 +107,7 @@ def edit_note(request, note_pk):
           
 @login_required #can only delete own notes
 def delete_note(request, note_pk):
+    """Delete a note's title, text and  photo from the database"""
     note = get_object_or_404(Note, pk=note_pk)
     if note.user == request.user:
         note.delete()

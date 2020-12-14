@@ -4,7 +4,6 @@
 
 <h2 id='show_info'>New note for {{ show.artist.name }} at {{ show.venue.name }} on {{ show.show_date}}</h2>
 
-
 <form method="POST" action="{% url 'new_note' show_pk=show.pk %}" enctype="multipart/form-data">
   
   <div>
@@ -16,6 +15,7 @@
   <input type='submit' class='submit' id='tweet' name='post_type' value='Tweet and Add Note'>
   
 </form>
+
 <p>Tweet character limit: 
   <span id='counter'>280/280</span>
   <br>More than 280 characters (including the show info) means the text will get truncated!

@@ -1,11 +1,7 @@
 
-from django.test import TestCase, Client
-from django.urls import reverse
+from django.test import TestCase
 from lmn.models import Venue, Artist, Note, Show
 from django.db import IntegrityError
-import re, datetime
-from datetime import timezone
-from lmn.views import views_admin
 from lmn.views.views_admin import get_music_data, get_ticketMaster, extract_music_details
 
 
@@ -60,11 +56,8 @@ class TestTicketMasterAPI(TestCase):
         venue3.save()
         venue3.id
         show3 = Show(show_date='2021-07-31 22:00:00', artist = artist3, venue = venue3)
-        #show3.show_date.isoformat()
         show3.save()
         #try to add a duplicate show
         show4 = Show(show_date='2021-07-31 22:00:00', artist = artist3, venue = venue3)
         with self.assertRaises(IntegrityError):
             show4.save()
-
-        

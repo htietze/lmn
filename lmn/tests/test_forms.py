@@ -34,7 +34,6 @@ class NewNoteFormTests(TestCase):
             self.assertFalse(form.is_valid())
 
 
-
     def test_title_too_long_is_invalid(self):
         # Max length is 200
         form_data = { "title" : "a" * 201 }
@@ -105,9 +104,7 @@ class RegistrationFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
 
-    # TODO make this test pass!
     def test_register_user_with_username_already_in_db_case_insensitive_fails(self):
-
         # Create a user with username bob
         bob = User(username='bob', email='bob@bob.com')
         bob.save()
@@ -121,7 +118,6 @@ class RegistrationFormTests(TestCase):
             self.assertFalse(form.is_valid())
 
 
-    # TODO make this test pass!
     def test_register_user_with_email_already_in_db_case_insensitive_fails(self):
 
         # Create a user with username bob
@@ -137,28 +133,27 @@ class RegistrationFormTests(TestCase):
             self.assertFalse(form.is_valid())
 
 
-
-
-class LoginFormTests(TestCase):
-
-    # TODO username not case sensitive - bob and BOB and Bob are the same
-   
+class LoginFormTests(TestCase):   
     pass
-class ProfileFormTest(TestCase):
 
+""" A Profile Form Test  class for testing User Profile Form """
+class ProfileFormTest(TestCase):
+    """ testing the maximum length of the field bio(500), if it is more than assigned length then the form will be invalid """
     def test_bio_too_long_is_invalid(self):
         # Max length is 500
         form_data = { "bio" : "a" * 501 }
         form = ProfileForm(form_data)
         self.assertFalse(form.is_valid())
 
+    """ testing the maximum length of the field favorite_artist(200), if it is more than assigned length then the form will be invalid """
     def test_favorite_artist_long_is_invalid(self):
         # Max length is 200
         form_data = { "favorite_artist" : "a" * 201 }
         form = ProfileForm(form_data)
         self.assertFalse(form.is_valid())  
 
-    def test_bio_is_empty(self):
+    """ testing to see if the location is an empty string and it returns true """
+    def test_location_is_empty(self):
         empty = ''
         form_data = { "location" : empty }
         form = ProfileForm(form_data)

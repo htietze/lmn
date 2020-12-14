@@ -1,7 +1,6 @@
 from django.contrib import messages
 import tweepy
 import os
-import requests
 import logging
 
 # consumer keys required for twitter app access, access tokens required for *account* access
@@ -9,7 +8,6 @@ consumer_key = os.getenv('T_API_KEY')
 consumer_secret = os.getenv('T_API_KEY_SEC')
 access_token = os.getenv('T_ACCESS_TOK')
 access_secret = os.getenv('T_ACCESS_TOK_SEC')
-
 
 
 def tweet_note(request, note):

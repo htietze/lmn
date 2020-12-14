@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
+"""Methods for working with registering new users, accessing current users and login"""
 def user_profile(request, user_pk):
     # Get user profile for any user on the site
     user = User.objects.get(pk=user_pk)
@@ -16,6 +17,7 @@ def user_profile(request, user_pk):
     return render(request, 'lmn/users/user_profile.html', { 'user_profile': user , 'notes': usernotes })
 
 
+""" Edited the logged-in User and directed it to my user profile """
 @login_required
 def my_user_profile(request):
     
@@ -68,6 +70,7 @@ def my_user_profile(request):
 
 
 def register(request):
+    """To register a new user"""
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
