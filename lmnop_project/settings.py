@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)') for i in range(50)])
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# Turn debug back on to see full error messages on deployed site for trouble shooting
 if os.getenv('GAE_INSTANCE'):
     DEBUG = False
 else:

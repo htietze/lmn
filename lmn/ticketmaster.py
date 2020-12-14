@@ -1,11 +1,8 @@
 
 import os
 import requests
-import re
 from .models import Artist, Venue, Show
-from django.http import HttpResponse
-from django.http import Http404
-from django.db import IntegrityError
+
 
 import logging
 """Getting data from ticketmaster api and saving to the database"""
