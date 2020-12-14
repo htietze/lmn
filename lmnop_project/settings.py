@@ -27,10 +27,10 @@ SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz01
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Turn debug back on to see full error messages on deployed site for trouble shooting
-if os.getenv('GAE_INSTANCE'):
-    DEBUG = False
-else:
-    DEBUG = True
+# if os.getenv('GAE_INSTANCE'):
+#     DEBUG = False
+# else:
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -96,13 +96,13 @@ DATABASES = {
 }
 
 if not os.getenv('GAE_INSTANCE'):
-    # DATABASES['default']['HOST'] = '127.0.0.1'
-    DATABASES = {
-        'default' :{
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
-        }
-    }
+    DATABASES['default']['HOST'] = '127.0.0.1'
+    # DATABASES = {
+    #     'default' :{
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+    #     }
+    # }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 

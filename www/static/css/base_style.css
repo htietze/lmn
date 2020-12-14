@@ -1,11 +1,23 @@
 body {
-  font-family: monospace;
-  background: #444d4d;
+  font-family: 'JetBrains Mono', monospace;
+  background: /*from https://projects.verou.me/css3patterns/#carbon*/
+
+  linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+  linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+  linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+  linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+  linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+
+  background-color: #131313;
+  background-size: 20px 20px;
   color: antiquewhite;
+  padding: 8px;
 }
 
 a {
-  color: rgb(70, 193, 197);
+  color: rgb(184, 138, 227);
+
 }
 
 #welcome-user-msg, #login-or-sign-up {
@@ -14,20 +26,51 @@ a {
   padding-right: 10px;
 }
 
+.navigation > a {
+  padding-right: 30px;
+}
+
 .error {
   background-color: #b73f08;
   border-radius: 5px;
   padding: 2px;
   margin: 2px;
-  /* font-weight: bold; */
 }
+
 .user-image{
   max-width: 70%;
 }
+
 .user-image{
   max-height: 50%;
 }
 
+.submit {
+  background-color: rgb(157, 3, 252);/* color of text on button */
+  color: rgb(162, 242, 170);
+}
 
+.submit:hover {
+  color: blue;
+  background-color:rgb(72, 237, 12);
 
+}
 
+.search { 
+  color: blue;
+  background-color: yellow
+}
+
+.search:hover {
+  background-color: rgb(72, 237,12)
+}
+
+.delete:hover {
+  background-color: red;
+}
+
+.badge {
+  max-width: 8%;
+  max-height: 8%;
+ 
+}
