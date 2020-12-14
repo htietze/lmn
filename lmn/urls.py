@@ -1,8 +1,5 @@
-from lmn.views.views_most_notes import show_most_notes
 from django.urls import path
 from django.contrib.auth import views as auth_views
-
-from . import views
 from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin, views_most_notes
 
 

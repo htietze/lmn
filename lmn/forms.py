@@ -1,9 +1,9 @@
 from django import forms
 from .models import Note, Profile
-
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms import ValidationError, DateInput
+from django.forms import ValidationError
+
 
 class VenueSearchForm(forms.Form):
     search_name = forms.CharField(label='Venue Name', max_length=200)

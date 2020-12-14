@@ -1,11 +1,7 @@
 
-from django.test import TestCase, Client
-from django.urls import reverse
+from django.test import TestCase
 from lmn.models import Venue, Artist, Note, Show
 from django.db import IntegrityError
-import re, datetime
-from datetime import timezone
-from lmn.views import views_admin
 from lmn.views.views_admin import get_music_data, get_ticketMaster, extract_music_details
 
 

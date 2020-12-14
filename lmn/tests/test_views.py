@@ -1,24 +1,15 @@
-from lmn.views.views_venues import artists_at_venue
-import unittest
-from django.test import TestCase, Client
 
+from django.test import TestCase
 from django.urls import reverse
 from django.contrib import auth
 from django.contrib.auth import authenticate
-
 from lmn.models import Venue, Artist, Note, Show
 from django.contrib.auth.models import User
-from lmnop_project import helpers
 import re, datetime
 from datetime import timezone
-
-from django.db.models import Count
-
 import os
-
 import tempfile
 from PIL import Image
-import filecmp
 
 
 class TestEmptyViews(TestCase):

@@ -4,15 +4,8 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 
-
-
-# Every model gets a primary key field by default.
-
-# Users, venues, shows, artists, notes
-
-# User is provided by Django. The email field is not unique by
-# default, so add this to prevent more than one user with the same email.
 User._meta.get_field('email')._unique = True
+
 
 #Require email, first name and last name
 User._meta.get_field('email')._blank = False
