@@ -3,6 +3,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
+from django.db.models import Count
 
 
 
@@ -62,11 +63,16 @@ class Note(models.Model):
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
+    #updatednum_of_user_note = models.IntegerField(blank=True, null=True)
 
     
 
     def save(self, *args, **kwargs):
         #get reference to previous versionof this note
+        user_notes = Note.objects.filter(user=self.user).count()
+        profile_note = Profile.objects.filter(user=self.user)
+        profile_note.update(updatednum_of_user_note=user_notes)
+
         old_note = Note.objects.filter(pk=self.pk).first()
         if old_note and old_note.photo: #check if an old note exists and has a photo
             if old_note.photo != self.photo: # check if the photo has been changed
@@ -86,7 +92,7 @@ class Note(models.Model):
 
 
     def __str__(self):
-        return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
+        return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo} '
 
 class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
@@ -95,9 +101,10 @@ class Profile(models.Model):
     favorite_show = models.CharField(max_length=200, blank=True)
     location = models.CharField(max_length=200, blank=True)
     favorite_music = models.CharField(max_length=200, blank=True)
+    updatednum_of_user_note = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music}'
+        return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music} {self. updatednum_of_user_note}'
 
 
 @receiver(post_save, sender=User)
@@ -108,3 +115,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+    

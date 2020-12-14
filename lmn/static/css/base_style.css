@@ -80,3 +80,9 @@ a {
 .delete:hover {
   background-color: red;
 }
+
+.badge {
+  max-width: 8%;
+  max-height: 8%;
+ 
+}

@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib import auth
 from django.contrib.auth import authenticate
 
-from lmn.models import Venue, Artist, Note, Show
+from lmn.models import Venue, Artist, Note, Show,Profile
 from django.contrib.auth.models import User
 from lmnop_project import helpers
 import re, datetime
@@ -460,7 +460,8 @@ class TestUserProfile(TestCase):
         # for currently logged in user, in this case, bob
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':3}))
 
-        self.assertContains(response, 'You are logged in, <a href="/user/profile/">bob</a>.')        
+        self.assertContains(response, 'You are logged in, <a href="/user/profile/">bob</a>.') 
+     
 
 class TestNotes(TestCase):
     fixtures = [ 'testing_users', 'testing_artists', 'testing_venues', 'testing_shows', 'testing_notes' ]  # Have to add artists and venues because of foreign key constrains in show
@@ -651,7 +652,14 @@ class TestProfileUser(TestCase):
         response = self.client.get(reverse('user_profile', kwargs={'user_pk':2}))
         self.assertContains(response, '2')
 
-
+    def test_user_badge(self):
+        initial = Profile.objects.count()
+        new_note_url = reverse('new_note', kwargs={'show_pk':1})
+        response = self.client.post(new_note_url, {'updatednum_of_user_note':1})
+        note_query = Profile.objects.filter(updatednum_of_user_note=1)
+        self.assertEqual(note_query.count(), 1)
+       
+      
     
 
     
