@@ -61,7 +61,6 @@ def my_user_profile(request):
     context = {
         'user_form' : user_form,
         'user_profile': request.user,
-        #'user_profile': request.user,
         'star': star
     }
 
