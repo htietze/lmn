@@ -1,15 +1,8 @@
-from django.test import TestCase, Client
-
+from django.test import TestCase
 from django.urls import reverse
-from django.contrib import auth
-from django.contrib.auth import authenticate
-
 from lmn.models import Venue, Artist, Note, Show
 from django.contrib.auth.models import User
-# from lmnop_project import helpers
-# import re, datetime
-# from datetime import timezone
-# import os
+
 
 
 class TestRatingsAddedWithNotes(TestCase):

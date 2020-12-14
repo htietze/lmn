@@ -1,7 +1,6 @@
 from django.contrib import messages
 import tweepy
 import os
-import requests
 import logging
 
 # consumer keys required for twitter app access, access tokens required for *account* access

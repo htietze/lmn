@@ -1,16 +1,10 @@
-from django.test import TestCase, Client
-
+from django.test import TestCase
 from django.urls import reverse
-from django.contrib import auth
-from django.contrib.auth import authenticate
-
 from lmn.models import Venue, Artist, Note, Show
 from django.contrib.auth.models import User
-
 from unittest.mock import patch, create_autospec, MagicMock
 from ..twitter import authorize, make_tweet_text, post_tweet, tweet_note
 import tweepy
-from tweepy.error import TweepError
 
 
 # These are gonna be hard to explain.

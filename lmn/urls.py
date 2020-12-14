@@ -1,8 +1,5 @@
-from lmn.views.views_most_notes import show_most_notes
 from django.urls import path
 from django.contrib.auth import views as auth_views
-
-from . import views
 from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin, views_most_notes
 
 
@@ -35,6 +32,8 @@ urlpatterns = [
     # User related
     path('user/profile/<int:user_pk>/', views_users.user_profile, name='user_profile'),
     path('user/profile/', views_users.my_user_profile, name='my_user_profile'),
+    
+   
 
     # Account related
     path('accounts/login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),

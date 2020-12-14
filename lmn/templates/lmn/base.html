@@ -6,7 +6,8 @@
   
   <link rel="stylesheet" href="{% static 'css/base_style.css' %}" type="text/css"></link>
   <!-- fontawesome provides icons -->
-  <script src="https://kit.fontawesome.com/d7811e014f.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/d7811e014f.js" crossorigin="anonymous"></script>  
+</head>
 
 </head>
 {% if messages %}
@@ -41,14 +42,6 @@
 
 {% block content %}
 {% endblock %}
-
-<!--{% if messages %}-->
-<!--  {% for message in messages %}-->
-<!--    <div class="message-{{ message.tags }}">-->
-<!--      <b>{{ message }}</b>-->
-<!--    </div>-->
-<!--  {% endfor %}-->
-<!--{% endif %}-->
 
 </body>
 </html>

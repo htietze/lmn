@@ -1,5 +1,37 @@
 {% extends 'lmn/base.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+{% endblock %}
 {% block content %}
+
+
+{% if star == "five_star" %}
+
+<P>Star:<img class="badge" src="{% static 'images/reward_1.jpg' %}"  > </p>
+
+{% elif  star == "four_star" %}
+<P>Star: <img class="badge" src="{% static 'images/reward_2.jpg' %}"></p>
+
+{% elif star == "three_star" %}
+<P>Star: <img class="badge" src="{% static 'images/reward_3.jpg' %}" ></p>
+
+
+{% elif star == "two_star" %}
+<P>Star: <img class="badge" src="{% static 'images/reward_4.jpg' %}" ></p>
+
+  
+{% elif star == "one_star" %}
+
+<P>Star: <img class="badge" src="{% static 'images/reward_5.jpg' %}"></p>
+
+{% elif star == "no_star" %}
+<P>Star: You don't have star reward </p>
+{% else %}
+<P>Star: You don't have star reward </p>
+
+{% endif %}
 
 <!-- A user's profile page-->
 
