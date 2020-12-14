@@ -5,7 +5,9 @@
         "favorite_artist": "Post Malone",
         "favorite_show": "Merder",
         "location": "Minneapolis",
-        "favorite_music":"muinit"
+
+        "favorite_music":"muinit",
+        "updatednum_of_user_note" : "1"
       }
     },
 
@@ -15,7 +17,8 @@
         "favorite_artist": "Akon",
         "favorite_show": "Merder",
         "location": "",
-        "favorite_music":"lonely"
+        "favorite_music":"lonely",
+        "updatednum_of_user_note" : "2"
       }
     }
 ]

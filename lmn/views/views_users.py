@@ -40,10 +40,30 @@ def my_user_profile(request):
 
         return redirect('my_user_profile')
     else:
+        #profile = Note.objects.get(user=request.user)
+        profile = Profile.objects.get(user=request.user) 
+        star = ""  
+        if profile.updatednum_of_user_note:
+        
+            num = profile.updatednum_of_user_note # user number of notes
+            if num >=10: 
+                star = "five_star"
+            elif num >=8:
+                star = "four_star"
+            elif num >= 6:
+                star ="three_star"
+            elif num >= 4:
+                star = "two_star"
+            elif num >= 1:
+                star = "one_star"
+            else:
+                star = "no_star"
+             
         user_form = ProfileForm()
     context = {
         'user_form' : user_form,
-        'user_profile': request.user
+        'user_profile': request.user,
+        'star': star
     }
 
     return render(request, 'lmn/users/my_user_profile.html', context)
@@ -72,3 +92,9 @@ def register(request):
 def goodbye(request):
     return render(request, 'registration/logout.html')
 
+
+
+
+
+
+    

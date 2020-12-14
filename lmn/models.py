@@ -3,6 +3,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
+from django.db.models import Count
 
 User._meta.get_field('email')._unique = True
 
@@ -59,13 +60,16 @@ class Note(models.Model):
     title = models.CharField(max_length=200, blank=False)
     text = models.TextField(max_length=1000, blank=False)
     posted_date = models.DateTimeField(auto_now_add=True, blank=False)
-
     photo = models.ImageField(upload_to='user_images/', blank=True, null=True)
     rating = models.CharField(choices=rating_choice, max_length=3, blank=True, null=True)
 
     
     def save(self, *args, **kwargs):
         #get reference to previous versionof this note
+        user_notes = Note.objects.filter(user=self.user).count()
+        profile_note = Profile.objects.filter(user=self.user)
+        profile_note.update(updatednum_of_user_note=user_notes)
+
         old_note = Note.objects.filter(pk=self.pk).first()
         if old_note and old_note.photo: #check if an old note exists and has a photo
             if old_note.photo != self.photo: # check if the photo has been changed
@@ -87,7 +91,7 @@ class Note(models.Model):
 
 
     def __str__(self):
-        return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo}'
+        return f'User: {self.user} Show: {self.show} Note title: {self.title} Text: {self.text} Posted on: {self.posted_date} Photo: {self.photo} '
 
 
 """ A User Profile class which is an extension of django user profile updating and adding more info about user """
@@ -98,9 +102,10 @@ class Profile(models.Model):
     favorite_show = models.CharField(max_length=200, blank=True)
     location = models.CharField(max_length=200, blank=True)
     favorite_music = models.CharField(max_length=200, blank=True)
+    updatednum_of_user_note = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music}'
+        return f'{self.bio} {self.favorite_artist} {self.favorite_show}{self.location}{self.favorite_music} {self. updatednum_of_user_note}'
 
     """ Whenever an instance of a User is being saved to the database this will notify django """
     @receiver(post_save, sender=User)
@@ -108,7 +113,19 @@ class Profile(models.Model):
         if created:
             Profile.objects.create(user=instance)
 
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+    
+
     """ The receiver notifies django when an instance of of a User is being saved """
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
+
