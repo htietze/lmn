@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from lmn.models import Venue, Artist, Note, Show
 from django.contrib.auth.models import User
-from unittest.mock import patch, create_autospec, MagicMock
+from unittest.mock import create_autospec, MagicMock
 from ..twitter import authorize, make_tweet_text, post_tweet, tweet_note
 import tweepy
 

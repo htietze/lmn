@@ -2,9 +2,6 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import views_main, views_artists, views_venues, views_notes, views_users, views_admin, views_most_notes
 
-
-"""URL patterns that link templates with methods in views."""
-
 urlpatterns = [
 
     path('', views_main.homepage, name='homepage'),

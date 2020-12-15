@@ -27,15 +27,12 @@ SECRET_KEY = ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz01
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Turn debug back on to see full error messages on deployed site for trouble shooting
-# if os.getenv('GAE_INSTANCE'):
-#     DEBUG = False
-# else:
-DEBUG = True
+if os.getenv('GAE_INSTANCE'):
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,6 +94,7 @@ DATABASES = {
 
 if not os.getenv('GAE_INSTANCE'):
     DATABASES['default']['HOST'] = '127.0.0.1'
+    # Until a fix is established, comment out the above line and run the following 6 lines when running locally
     # DATABASES = {
     #     'default' :{
     #         'ENGINE': 'django.db.backends.sqlite3',
