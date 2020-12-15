@@ -12,8 +12,9 @@ __pycache__
 venv
 env
 lmnop_credentials.json
+lmnop-project5-fa3bc2f81532.json
 app.yaml
 gcp_creds.json
 media
 cloud_sql_proxy
-
+gcp_creds.json

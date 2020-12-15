@@ -13,9 +13,9 @@ url = 'https://app.ticketmaster.com/discovery/v2/events'
 classificationName = 'music'
 city = 'Minneapolis'
 
+
 def get_ticketMaster():
     """The api call to Ticketmaster
-
     :return: data json response
     :raises exception
     """
@@ -29,11 +29,10 @@ def get_ticketMaster():
         
     
 def extract_music_details(data):
-    """Extract relevant data from the response;
-    saving data to the database avoiding duplicates
+    # Extract relevant data from the response;
+    # saving data to the database avoiding duplicates
+    # params: data - json response from ticketmaster
 
-    :params: data - json response from ticketmaster
-    """
     events = data['_embedded']['events']
     
     for event in events: 
