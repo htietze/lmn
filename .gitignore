@@ -13,7 +13,7 @@ venv
 env
 lmnop_credentials.json
 app.yaml
-lmnop-project5-fa3bc2f81532.json
+gcp_creds.json
 media
 cloud_sql_proxy
 
