@@ -158,7 +158,7 @@ if os.getenv('GAE_INSTANCE'):
     MEDIA_URL = f'https://storage.cloud.google.com/{GS_BUCKET_NAME}/media/'
 
     from google.oauth2 import service_account
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_file('lmnop_credentials.json')
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file('gcp_creds.json')
 
 
 # Where to send user after successful login, and logout, if no other page is provided.
